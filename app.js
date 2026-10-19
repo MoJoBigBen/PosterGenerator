@@ -151,7 +151,13 @@ function render(canvas) {
   const year = $('year').value.trim();
   const footer = $('footer').value.trim();
   const tracks = parseTracks($('tracks').value);
-  const showPalette = $('showPalette').checked && state.palette.length > 0;
+  // Eine Palettenfarbe, die dem Hintergrund entspricht, wäre unsichtbar und
+  // risse eine Lücke in die Reihe – also gar nicht erst zeichnen.
+  const bgRgb = fromHex(bg);
+  const swatches = $('showPalette').checked
+    ? state.palette.filter((c) => Math.hypot(c[0] - bgRgb[0], c[1] - bgRgb[1], c[2] - bgRgb[2]) > 30)
+    : [];
+  const showPalette = swatches.length > 0;
 
   const m = 75;
   const gap = 55;
@@ -258,8 +264,8 @@ function render(canvas) {
   }
   if (showPalette) {
     const sw = 28, sg = 10;
-    const total = state.palette.length * sw + (state.palette.length - 1) * sg;
-    state.palette.forEach((col, i) => {
+    const total = swatches.length * sw + (swatches.length - 1) * sg;
+    swatches.forEach((col, i) => {
       ctx.fillStyle = toHex(col);
       ctx.fillRect(x0 + cw - total + i * (sw + sg), footerBase - sw + 4, sw, sw);
     });
