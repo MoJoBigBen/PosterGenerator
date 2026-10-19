@@ -228,18 +228,24 @@ function render(canvas) {
   }
 
   // artist + tracks
-  let size = 22;
+  // Die Künstlerzeile hat eine feste Größe und schrumpft nie mit der Tracklist.
+  const artistSize = 26;
+  const artistLH = artistSize * 1.4;
   if (artist || tracks.length) {
-    const avail = textBottom - y;
-    const artistH = artist ? 30 : 0;
+    let artistLines = [];
+    if (artist) {
+      ctx.font = `600 ${artistSize}px ${FONT}`;
+      artistLines = wrapText(ctx, artist.toUpperCase(), cw);
+    }
+    const artistH = artistLines.length * artistLH + (artist && tracks.length ? 6 : 0);
+    const drawArtist = () => {
+      ctx.font = `600 ${artistSize}px ${FONT}`;
+      artistLines.forEach((line, i) => ctx.fillText(line, x0, y + artistSize + i * artistLH));
+    };
     if (tracks.length) {
-      const t = fitTracks(ctx, tracks, $('trackStyle').value, cw, avail - artistH);
-      size = t.size;
-      if (artist) {
-        ctx.font = `600 ${t.size}px ${FONT}`;
-        ctx.fillText(artist.toUpperCase(), x0, y + t.size);
-        y += t.size * 1.5 + 4;
-      }
+      const t = fitTracks(ctx, tracks, $('trackStyle').value, cw, textBottom - y - artistH);
+      drawArtist();
+      y += artistH;
       ctx.font = `400 ${t.size}px ${FONT}`;
       ctx.globalAlpha = 0.78;
       for (let c = 0; c < t.cols; c++) {
@@ -250,8 +256,7 @@ function render(canvas) {
       }
       ctx.globalAlpha = 1;
     } else {
-      ctx.font = `600 ${size}px ${FONT}`;
-      ctx.fillText(artist.toUpperCase(), x0, y + size);
+      drawArtist();
     }
   }
 
