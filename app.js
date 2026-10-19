@@ -106,15 +106,15 @@ function parseTracks(raw) {
 
 // Finds the biggest font size (and column count for list style) that fits the box.
 function fitTracks(ctx, tracks, style, width, height) {
-  const attempts = style === 'list' ? [1, 2, 3] : [1];
-  for (const cols of attempts) {
-    for (let s = 26; s >= 12; s--) {
+  // Größte Schrift zuerst; bei gleicher Größe die wenigsten Spalten.
+  const maxCols = style === 'list' ? 5 : 1;
+  for (let s = 26; s >= 6; s--) {
+    for (let cols = 1; cols <= maxCols; cols++) {
       const r = layoutTracks(ctx, tracks, style, cols, s, width);
       if (r.height <= height) return r;
     }
   }
-  const last = attempts[attempts.length - 1];
-  return layoutTracks(ctx, tracks, style, last, 12, width);
+  return layoutTracks(ctx, tracks, style, maxCols, 6, width);
 }
 
 function layoutTracks(ctx, tracks, style, cols, size, width) {
