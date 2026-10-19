@@ -12,7 +12,16 @@ const SIZES = [
   ['50 × 70 cm', 500, 700],
 ];
 
+// Beim Film-Poster passt sich das Format dem Bild an; Zahl = lange Seite in mm.
+const AUTO_SIZES = [
+  ['Bildformat · 30 cm', 300],
+  ['Bildformat · A3 (42 cm)', 420],
+  ['Bildformat · A2 (59,4 cm)', 594],
+  ['Bildformat · 70 cm', 700],
+];
+
 const state = {
+  mode: 'album',
   cover: null,
   palette: [],
 };
@@ -141,6 +150,12 @@ function render(canvas) {
   const H = canvas.height / scale;
   ctx.setTransform(scale, 0, 0, scale, 0, 0);
   ctx.textBaseline = 'alphabetic';
+  ctx.globalAlpha = 1;
+
+  if (state.mode === 'film') {
+    renderFilm(ctx, L, H, scale);
+    return;
+  }
 
   const { bg, fg } = resolveColors();
   ctx.fillStyle = bg;
@@ -281,8 +296,42 @@ function render(canvas) {
 
 const preview = $('preview');
 
+// Auswahl im Format-Menü: [Name, Breite mm, Höhe mm] oder [Name, 0, 0, lange Seite mm]
+function sizeOptions() {
+  const fixed = SIZES.map(([name, w, h]) => ({ name, w, h }));
+  if (state.mode !== 'film') return fixed;
+  return [...AUTO_SIZES.map(([name, long]) => ({ name, long })), ...fixed];
+}
+
 function currentSize() {
-  return SIZES[+$('size').value];
+  const o = sizeOptions()[+$('size').value] || sizeOptions()[0];
+  if (!o.long) return [o.name, o.w, o.h];
+  const a = film.img ? film.img.naturalWidth / film.img.naturalHeight : 2 / 3;
+  const aspect = Math.min(2.5, Math.max(0.4, a)); // Breite / Höhe, extreme Formate begrenzen
+  return aspect < 1
+    ? [o.name, Math.round(o.long * aspect), o.long]
+    : [o.name, o.long, Math.round(o.long / aspect)];
+}
+
+function buildSizeSelect(defaultIndex) {
+  const sel = $('size');
+  sel.innerHTML = '';
+  sizeOptions().forEach((o, i) => {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = o.name;
+    sel.appendChild(opt);
+  });
+  sel.value = defaultIndex;
+}
+
+// Sehr große Exporte sprengen den Canvas-Speicher des Browsers: dpi dann senken.
+const MAX_EXPORT_PIXELS = 130e6;
+
+function exportDpi(w, h) {
+  const dpi = +$('dpi').value;
+  const area = (w / 25.4 * dpi) * (h / 25.4 * dpi);
+  return area > MAX_EXPORT_PIXELS ? Math.floor(dpi * Math.sqrt(MAX_EXPORT_PIXELS / area)) : dpi;
 }
 
 function redraw() {
@@ -290,23 +339,70 @@ function redraw() {
   preview.width = 1000;
   preview.height = Math.round(1000 * h / w);
   render(preview);
-  const dpi = +$('dpi').value;
+  preview.classList.toggle('is-draggable', state.mode === 'film' && !!film.img);
+
+  const dpi = exportDpi(w, h);
   const px = (mm) => Math.round(mm / 25.4 * dpi);
-  $('hint').textContent = `Export: ${px(w)} × ${px(h)} px`;
+  let text = `Export: ${px(w)} × ${px(h)} px`;
+  if (dpi !== +$('dpi').value) text += ` (auf ${dpi} dpi begrenzt)`;
+  let warn = false;
+  if (state.mode === 'film' && film.img) {
+    // Wie viele Bildpunkte des Originals landen pro Zoll im Druck?
+    const mmPerPx = Math.max(w / film.img.naturalWidth, h / film.img.naturalHeight) / +$('fZoom').value;
+    const eff = Math.round(25.4 / mmPerPx);
+    text += ` · Bild ≈ ${eff} dpi`;
+    if (eff < 150) { text += ' (wirkt im Druck unscharf)'; warn = true; }
+  }
+  $('hint').textContent = text;
+  $('hint').classList.toggle('warn', warn);
+}
+
+// Bild aus Datei, Einfügen oder TMDB: je nach Modus Album-Cover oder Film-Bild.
+function applyImage(img, label) {
+  if (state.mode === 'film') {
+    film.img = img;
+    film.px = film.py = 0.5;
+    $('fZoom').value = 1;
+  } else {
+    state.cover = img;
+    state.palette = extractPalette(img);
+    renderSwatches();
+  }
+  $('dropText').textContent = label;
+  redraw();
+}
+
+function loadRemoteImage(url) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous'; // sonst ließe sich das Poster nicht exportieren
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error('Bild konnte nicht geladen werden'));
+    img.src = url;
+  });
 }
 
 function setCover(file) {
   if (!file || !file.type.startsWith('image/')) return;
   const url = URL.createObjectURL(file);
   const img = new Image();
-  img.onload = () => {
-    state.cover = img;
-    state.palette = extractPalette(img);
-    $('dropText').textContent = file.name || 'Cover geladen – anderes Bild ablegen zum Ersetzen';
-    renderSwatches();
-    redraw();
-  };
+  img.onload = () => applyImage(img, file.name || 'Bild geladen – anderes Bild ablegen zum Ersetzen');
   img.src = url;
+}
+
+const DROP_TEXT = {
+  album: 'Cover hier ablegen, einfügen oder klicken',
+  film: 'Bild (Poster oder Standbild) hier ablegen, einfügen oder klicken',
+};
+
+function setMode(mode) {
+  state.mode = mode;
+  $('app').dataset.mode = mode;
+  document.querySelectorAll('.tab').forEach((t) => t.classList.toggle('is-active', t.dataset.mode === mode));
+  buildSizeSelect(1); // Album: A3 – Film: Bildformat A3
+  const img = mode === 'film' ? film.img : state.cover;
+  $('dropText').textContent = img ? 'Bild geladen – anderes Bild ablegen zum Ersetzen' : DROP_TEXT[mode];
+  redraw();
 }
 
 function renderSwatches() {
@@ -332,13 +428,16 @@ function slug(s) {
 }
 
 function filename(ext) {
-  const base = [slug($('artist').value), slug($('title').value)].filter(Boolean).join('-') || 'poster';
+  const parts = state.mode === 'film'
+    ? [slug($('fTitle').value), slug($('fYear').value)]
+    : [slug($('artist').value), slug($('title').value)];
+  const base = parts.filter(Boolean).join('-') || 'poster';
   return `${base}-poster.${ext}`;
 }
 
 function exportCanvas() {
   const [, w, h] = currentSize();
-  const dpi = +$('dpi').value;
+  const dpi = exportDpi(w, h);
   const c = document.createElement('canvas');
   c.width = Math.round(w / 25.4 * dpi);
   c.height = Math.round(h / 25.4 * dpi);
@@ -414,32 +513,37 @@ function buildPdf(jpeg, pxW, pxH, wPt, hPt) {
 }
 
 // inputs
-SIZES.forEach(([name], i) => {
-  const o = document.createElement('option');
-  o.value = i;
-  o.textContent = name;
-  $('size').appendChild(o);
-});
-$('size').value = 1; // A3
-
 $('title').value = SAMPLE.title;
 $('artist').value = SAMPLE.artist;
 $('year').value = SAMPLE.year;
 $('tracks').value = SAMPLE.tracks;
 $('footer').value = SAMPLE.footer;
 
-['title', 'artist', 'year', 'tracks', 'footer', 'trackStyle', 'bgMode', 'customBg', 'showPalette', 'size', 'dpi']
-  .forEach((id) => $(id).addEventListener('input', () => {
-    if (id === 'customBg') $('bgMode').value = 'custom';
-    redraw();
-  }));
+$('fTitle').value = FILM_SAMPLE.title;
+$('fTagline').value = FILM_SAMPLE.tagline;
+$('fYear').value = FILM_SAMPLE.year;
+$('fCast').value = FILM_SAMPLE.cast;
+$('fCredits').value = FILM_SAMPLE.credits;
+
+[
+  'title', 'artist', 'year', 'tracks', 'footer', 'trackStyle', 'bgMode', 'customBg', 'showPalette',
+  'fTitle', 'fTagline', 'fYear', 'fCast', 'fCredits', 'fLayout', 'fFont', 'fColor', 'fShade', 'fZoom',
+  'size', 'dpi',
+].forEach((id) => $(id).addEventListener('input', () => {
+  if (id === 'customBg') $('bgMode').value = 'custom';
+  redraw();
+}));
+
+document.querySelectorAll('.tab').forEach((t) => t.addEventListener('click', () => setMode(t.dataset.mode)));
+initFilmDrag(preview, redraw);
+initTmdb();
 
 // cover input: click, drag & drop, paste
 $('coverFile').addEventListener('change', (e) => setCover(e.target.files[0]));
 const drop = $('drop');
 ['dragenter', 'dragover'].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.add('over'); }));
 ['dragleave', 'drop'].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.remove('over'); }));
-drop.addEventListener('drop', (e) => setCover(e.dataTransfer.files[0]));
+drop.addEventListener('drop', (e) => { e.stopPropagation(); setCover(e.dataTransfer.files[0]); });
 window.addEventListener('dragover', (e) => e.preventDefault());
 window.addEventListener('drop', (e) => { e.preventDefault(); setCover(e.dataTransfer.files[0]); });
 window.addEventListener('paste', (e) => {
@@ -447,4 +551,4 @@ window.addEventListener('paste', (e) => {
   if (item) setCover(item.getAsFile());
 });
 
-redraw();
+setMode('album');

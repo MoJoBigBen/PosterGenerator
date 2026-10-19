@@ -7,71 +7,157 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="app">
+<div class="app" id="app" data-mode="album">
   <aside class="controls">
-    <h1>Album-Poster</h1>
+    <h1>Poster Generator</h1>
+
+    <div class="tabs" role="tablist">
+      <button type="button" class="tab is-active" data-mode="album">Album</button>
+      <button type="button" class="tab" data-mode="film">Film</button>
+    </div>
 
     <label class="drop" id="drop">
       <input type="file" id="coverFile" accept="image/*" hidden>
       <span id="dropText">Cover hier ablegen, einfügen oder klicken</span>
     </label>
 
-    <div class="field">
-      <label for="title">Titel</label>
-      <input id="title" type="text">
-    </div>
-    <div class="row">
-      <div class="field grow">
-        <label for="artist">Künstler</label>
-        <input id="artist" type="text">
+    <!-- ===== Album ===== -->
+    <div class="group only-album">
+      <div class="field">
+        <label for="title">Titel</label>
+        <input id="title" type="text">
       </div>
-      <div class="field year">
-        <label for="year">Jahr</label>
-        <input id="year" type="text" maxlength="4">
+      <div class="row">
+        <div class="field grow">
+          <label for="artist">Künstler</label>
+          <input id="artist" type="text">
+        </div>
+        <div class="field year">
+          <label for="year">Jahr</label>
+          <input id="year" type="text" maxlength="4">
+        </div>
       </div>
-    </div>
-    <div class="field">
-      <label for="tracks">Tracks <small>(einer pro Zeile)</small></label>
-      <textarea id="tracks" rows="9"></textarea>
-    </div>
-    <div class="field">
-      <label for="footer">Fußzeile <small>(Label, Spruch, …)</small></label>
-      <input id="footer" type="text">
+      <div class="field">
+        <label for="tracks">Tracks <small>(einer pro Zeile)</small></label>
+        <textarea id="tracks" rows="9"></textarea>
+      </div>
+      <div class="field">
+        <label for="footer">Fußzeile <small>(Label, Spruch, …)</small></label>
+        <input id="footer" type="text">
+      </div>
+
+      <div class="row">
+        <div class="field grow">
+          <label for="trackStyle">Tracklist</label>
+          <select id="trackStyle">
+            <option value="flow">Fließtext</option>
+            <option value="list">Liste</option>
+          </select>
+        </div>
+        <div class="field grow">
+          <label for="bgMode">Hintergrund</label>
+          <select id="bgMode">
+            <option value="cream">Creme</option>
+            <option value="white">Weiß</option>
+            <option value="black">Schwarz</option>
+            <option value="coverLight">Cover (hell)</option>
+            <option value="cover">Cover</option>
+            <option value="coverDark">Cover (dunkel)</option>
+            <option value="custom">Eigene Farbe</option>
+          </select>
+        </div>
+        <div class="field color">
+          <label for="customBg">&nbsp;</label>
+          <input id="customBg" type="color" value="#ecebe6">
+        </div>
+      </div>
+
+      <div class="field" id="swatchField" hidden>
+        <label>Farben aus dem Cover <small>(klicken = Hintergrund)</small></label>
+        <div class="swatches" id="swatches"></div>
+      </div>
+
+      <label class="check"><input type="checkbox" id="showPalette"> Farbpalette im Poster zeigen</label>
     </div>
 
-    <div class="row">
-      <div class="field grow">
-        <label for="trackStyle">Tracklist</label>
-        <select id="trackStyle">
-          <option value="flow">Fließtext</option>
-          <option value="list">Liste</option>
-        </select>
+    <!-- ===== Film ===== -->
+    <div class="group only-film">
+      <details class="tmdb" id="tmdbBox" open>
+        <summary>Film suchen (TMDB)</summary>
+        <div class="field">
+          <label for="tmdbKey">API-Key <small>(einmalig, bleibt nur in deinem Browser)</small></label>
+          <input id="tmdbKey" type="password" autocomplete="off" spellcheck="false">
+        </div>
+        <div class="row">
+          <div class="field grow">
+            <input id="tmdbQuery" type="text" placeholder="z. B. The Dark Knight">
+          </div>
+          <button type="button" id="tmdbSearch" class="secondary">Suchen</button>
+        </div>
+        <div class="results" id="tmdbResults"></div>
+        <div class="field" id="tmdbImagesField" hidden>
+          <label>Bild wählen <small>(Poster ohne Text zuerst)</small></label>
+          <div class="thumbs" id="tmdbThumbs"></div>
+        </div>
+        <p class="hint" id="tmdbMsg"></p>
+        <p class="hint tiny">This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
+      </details>
+
+      <div class="field">
+        <label for="fTitle">Titel</label>
+        <input id="fTitle" type="text">
       </div>
-      <div class="field grow">
-        <label for="bgMode">Hintergrund</label>
-        <select id="bgMode">
-          <option value="cream">Creme</option>
-          <option value="white">Weiß</option>
-          <option value="black">Schwarz</option>
-          <option value="coverLight">Cover (hell)</option>
-          <option value="cover">Cover</option>
-          <option value="coverDark">Cover (dunkel)</option>
-          <option value="custom">Eigene Farbe</option>
-        </select>
+      <div class="field">
+        <label for="fTagline">Tagline <small>(oben)</small></label>
+        <input id="fTagline" type="text">
       </div>
-      <div class="field color">
-        <label for="customBg">&nbsp;</label>
-        <input id="customBg" type="color" value="#ecebe6">
+      <div class="row top">
+        <div class="field year">
+          <label for="fYear">Jahr</label>
+          <input id="fYear" type="text" maxlength="4">
+        </div>
+        <div class="field grow">
+          <label for="fCast">Darsteller <small>(einer pro Zeile)</small></label>
+          <textarea id="fCast" rows="4"></textarea>
+        </div>
+      </div>
+      <div class="field">
+        <label for="fCredits">Credits <small>(kleiner Block unten)</small></label>
+        <textarea id="fCredits" rows="3"></textarea>
+      </div>
+
+      <div class="row">
+        <div class="field grow">
+          <label for="fLayout">Stil</label>
+          <select id="fLayout">
+            <option value="teaser">Teaser</option>
+            <option value="classic">Klassisch</option>
+          </select>
+        </div>
+        <div class="field grow">
+          <label for="fFont">Schrift</label>
+          <select id="fFont">
+            <option value="sans">Sans, breit</option>
+            <option value="serif">Serif</option>
+            <option value="compact">Kompakt</option>
+          </select>
+        </div>
+        <div class="field color">
+          <label for="fColor">&nbsp;</label>
+          <input id="fColor" type="color" value="#ffffff">
+        </div>
+      </div>
+      <div class="field">
+        <label for="fShade">Abdunkelung <small>(Verlauf für die Schrift)</small></label>
+        <input id="fShade" type="range" min="0" max="100" value="70">
+      </div>
+      <div class="field">
+        <label for="fZoom">Bildausschnitt <small>(Zoom, Bild mit der Maus verschieben)</small></label>
+        <input id="fZoom" type="range" min="1" max="3" step="0.01" value="1">
       </div>
     </div>
 
-    <div class="field" id="swatchField" hidden>
-      <label>Farben aus dem Cover <small>(klicken = Hintergrund)</small></label>
-      <div class="swatches" id="swatches"></div>
-    </div>
-
-    <label class="check"><input type="checkbox" id="showPalette"> Farbpalette im Poster zeigen</label>
-
+    <!-- ===== gemeinsam ===== -->
     <div class="row">
       <div class="field grow">
         <label for="size">Format</label>
@@ -98,6 +184,8 @@
     <canvas id="preview" width="1000" height="1414"></canvas>
   </main>
 </div>
+<script src="film.js"></script>
+<script src="tmdb.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
