@@ -143,6 +143,8 @@ Dann einen Filmtitel eingeben, auf **Suchen** klicken und den Film anklicken.
 Alle Felder füllen sich, und das erste Poster ohne Text wird geladen. Unter
 "Bild wählen" kannst du ein anderes Bild nehmen.
 
+<a href="https://www.themoviedb.org"><img src="assets/tmdb-logo.svg" alt="TMDB" height="16"></a>
+
 *This product uses the TMDB API but is not endorsed or certified by TMDB.*
 
 ## Formate
@@ -178,6 +180,7 @@ i18n.js      Texte auf Englisch und Deutsch
 app.js       Album-Poster, Farbpalette, Formate, PNG- und PDF-Export
 film.js      Film-Poster (Vollbild, Stile, Bildausschnitt)
 tmdb.js      Filmsuche und Bilder von TMDB
+assets/      TMDB-Logo
 itunes.js    Albumsuche von iTunes
 ```
 
