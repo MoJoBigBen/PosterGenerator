@@ -19,7 +19,7 @@ und kein Konto. Deine Bilder werden nirgends hochgeladen. Nur die Suchen
 
 ## Download
 
-Das Repo ist privat, du musst bei GitHub eingeloggt sein.
+Das Repo ist öffentlich, du brauchst für den Download kein GitHub-Konto.
 
 **Als ZIP:** auf GitHub oben rechts **Code → Download ZIP**, entpacken.
 

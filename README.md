@@ -19,7 +19,7 @@ searches (iTunes for albums, TMDB for films, see below) contact those services.
 
 ## Download
 
-The repo is private, so you need to be logged in to GitHub.
+The repo is public, so you don't need a GitHub account to download it.
 
 **As a ZIP:** on GitHub click **Code → Download ZIP** (top right), then unzip.
 
