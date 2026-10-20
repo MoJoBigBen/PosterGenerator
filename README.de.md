@@ -116,6 +116,21 @@ wählen, dann wird das Bild zugeschnitten.
    auf hellen Bildern lesbar bleibt.
 6. **Bildausschnitt**: Mit dem Zoom-Regler vergrößerst du das Bild, mit der
    Maus verschiebst du es direkt in der Vorschau.
+7. **Text verschieben**: Viele Poster haben eine ruhige Fläche, die für Text
+   gedacht ist, manchmal weiter oben. Ziehe einen Text in der Vorschau, um ihn zu
+   verschieben. Was mitwandert, stellst du unter **Ziehen bewegt** ein:
+   - **Unteren Textblock**: Darsteller, Titel, Jahr und Credits wandern
+     zusammen. Die Tagline oben wandert für sich.
+   - **Einzelnes Element**: nur das, das du anfasst.
+   - **Gesamten Text**: alles auf einmal.
+
+   Der Text **rastet ein** an der Mitte, an den Rändern, an den Dritteln des
+   Posters und an den Kanten und Mitten der anderen Textelemente. Blaue
+   Hilfslinien zeigen, woran er eingerastet ist. Mit gedrückter **Alt**-Taste
+   (Option) ziehst du frei ohne Einrasten. Ein **Doppelklick** auf einen Text
+   setzt ihn (und was mit ihm wandert) zurück, mit **Zurücksetzen** den ganzen
+   Text. Der gestrichelte Rahmen und die Hilfslinien erscheinen nur in der
+   Vorschau, nie im Export.
 
 Unter den Knöpfen steht, wie viele **dpi** dein Bild im Druck hat. Unter etwa
 150 dpi wirkt es unscharf. Das gilt auch für Album-Cover. Bei TMDB nimmst du am besten ein Poster oder eine

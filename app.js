@@ -162,7 +162,7 @@ function render(canvas) {
   ctx.globalAlpha = 1;
 
   if (state.mode === 'film') {
-    renderFilm(ctx, L, H, scale);
+    renderFilm(ctx, L, H, scale, canvas === preview);
     return;
   }
 
@@ -348,7 +348,8 @@ function redraw() {
   preview.width = 1000;
   preview.height = Math.round(1000 * h / w);
   render(preview);
-  preview.classList.toggle('is-draggable', state.mode === 'film' && !!film.img);
+  preview.classList.toggle('is-draggable', state.mode === 'film');
+  preview.classList.toggle('can-pan', state.mode === 'film' && !!film.img);
 
   const dpi = exportDpi(w, h);
   const px = (mm) => Math.round(mm / 25.4 * dpi);
@@ -432,6 +433,8 @@ function setLanguage(next) {
 
 function setMode(mode) {
   state.mode = mode;
+  film.hover = [];
+  preview.style.cursor = '';
   $('app').dataset.mode = mode;
   document.querySelectorAll('.tab').forEach((t) => t.classList.toggle('is-active', t.dataset.mode === mode));
   buildSizeSelect(1); // Album: A3 – Film: Bildformat A3
@@ -617,6 +620,7 @@ $('fCredits').value = FILM_SAMPLE[lang].credits;
 document.querySelectorAll('.tab').forEach((tab) => tab.addEventListener('click', () => setMode(tab.dataset.mode)));
 document.querySelectorAll('.lang button').forEach((b) => b.addEventListener('click', () => setLanguage(b.dataset.lang)));
 initFilmDrag(preview, redraw);
+$('fResetText').addEventListener('click', () => { resetFilmText(); redraw(); });
 initTmdb();
 initItunes();
 initAskSave();

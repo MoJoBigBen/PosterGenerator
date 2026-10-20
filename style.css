@@ -165,7 +165,8 @@ button.secondary:hover { border-color: var(--muted); }
 .hint.tiny { font-size: 10px; opacity: .6; }
 .hint.warn { color: #e8a33d; }
 
-#preview.is-draggable { cursor: grab; touch-action: none; }
+#preview.is-draggable { touch-action: none; }
+#preview.can-pan { cursor: grab; }
 #preview.is-dragging { cursor: grabbing; }
 
 [hidden] { display: none !important; }

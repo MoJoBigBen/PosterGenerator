@@ -173,6 +173,17 @@
         <label for="fZoom"><span data-i18n="lblZoom">Image crop</span> <small data-i18n="hintZoom">(zoom – drag the image with the mouse)</small></label>
         <input id="fZoom" type="range" min="1" max="3" step="0.01" value="1">
       </div>
+      <div class="row">
+        <div class="field grow">
+          <label for="fMove"><span data-i18n="lblMove">Dragging moves</span> <small data-i18n="hintMove">(double-click resets, Alt = no snapping)</small></label>
+          <select id="fMove">
+            <option value="block" data-i18n="optMoveBlock">Bottom text block</option>
+            <option value="single" data-i18n="optMoveSingle">Single element</option>
+            <option value="all" data-i18n="optMoveAll">All text</option>
+          </select>
+        </div>
+        <button type="button" id="fResetText" class="secondary" data-i18n="btnResetText">Reset</button>
+      </div>
     </div>
 
     <!-- ===== shared ===== -->

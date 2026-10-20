@@ -114,6 +114,20 @@ pick a fixed format like A3 or 50 × 70, in which case the image is cropped.
    the text readable on bright images.
 6. **Image crop**: zoom with the slider and drag the image with the mouse
    right in the preview.
+7. **Moving the text**: many posters have a calm area meant for the text,
+   sometimes higher up. Drag any text in the preview to move it. What moves is
+   set under **Dragging moves**:
+   - **Bottom text block**: cast, title, year and credits move together. The
+     tagline at the top moves on its own.
+   - **Single element**: only the one you grab.
+   - **All text**: everything at once.
+
+   The text **snaps** to the centre, the margins, the thirds of the poster and
+   to the edges and centres of the other text elements. Blue guide lines show
+   what it snapped to. Hold **Alt** (Option) to drag freely without snapping.
+   **Double-click** a text to put it (and what moves with it) back, or use
+   **Reset** to reset all text. The dashed frame and the guide lines show only
+   in the preview, never in the export.
 
 Below the buttons the tool shows how many **dpi** your image has in print.
 Below about 150 dpi it looks blurry. This works for album covers too. From TMDB, take a poster or a still at
