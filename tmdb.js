@@ -16,7 +16,7 @@ function tmdbMsg(text, warn = false) {
 
 async function tmdbFetch(path, params = {}) {
   const key = $('tmdbKey').value.trim();
-  if (!key) throw new Error('Bitte zuerst den TMDB-API-Key eintragen (kostenlos unter themoviedb.org → Einstellungen → API).');
+  if (!key) throw new Error(t('errNoKey'));
 
   const url = new URL(TMDB.api + path);
   Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
@@ -30,10 +30,10 @@ async function tmdbFetch(path, params = {}) {
   try {
     res = await fetch(url, opts);
   } catch {
-    throw new Error('TMDB nicht erreichbar. Internetverbindung prüfen.');
+    throw new Error(t('errUnreachable'));
   }
-  if (res.status === 401) throw new Error('Der API-Key wurde von TMDB abgelehnt.');
-  if (!res.ok) throw new Error(`TMDB-Fehler (${res.status}).`);
+  if (res.status === 401) throw new Error(t('errRejected'));
+  if (!res.ok) throw new Error(t('errTmdb', { status: res.status }));
   return res.json();
 }
 
@@ -42,11 +42,11 @@ async function tmdbSearch() {
   if (!q) return;
   const box = $('tmdbResults');
   box.innerHTML = '';
-  tmdbMsg('Suche …');
+  tmdbMsg(t('msgSearching'));
   try {
-    const data = await tmdbFetch('/search/movie', { query: q, language: 'de-DE', include_adult: 'false' });
+    const data = await tmdbFetch('/search/movie', { query: q, language: t('tmdbLang'), include_adult: 'false' });
     const hits = (data.results || []).slice(0, 8);
-    tmdbMsg(hits.length ? '' : 'Nichts gefunden.');
+    tmdbMsg(hits.length ? '' : t('msgNone'));
     hits.forEach((m) => {
       const b = document.createElement('button');
       b.type = 'button';
@@ -80,17 +80,17 @@ const textlessFirst = (list) =>
     (a.iso_639_1 === null ? 0 : 1) - (b.iso_639_1 === null ? 0 : 1) || (b.vote_average || 0) - (a.vote_average || 0));
 
 async function tmdbLoadMovie(id) {
-  tmdbMsg('Lade Film …');
+  tmdbMsg(t('msgLoadingFilm'));
   try {
     const d = await tmdbFetch(`/movie/${id}`, {
-      language: 'de-DE',
+      language: t('tmdbLang'),
       append_to_response: 'credits,images',
       include_image_language: 'de,en,null',
     });
 
-    // Deutsche Taglines fehlen oft – dann die englische nehmen.
+    // Übersetzte Taglines fehlen oft – dann die englische nehmen.
     let tagline = d.tagline || '';
-    if (!tagline) {
+    if (!tagline && t('tmdbLang') !== 'en-US') {
       try { tagline = (await tmdbFetch(`/movie/${id}`, { language: 'en-US' })).tagline || ''; } catch { /* egal */ }
     }
 
@@ -100,12 +100,12 @@ async function tmdbLoadMovie(id) {
       return hit ? hit.name : '';
     };
     const first = [
-      ['Regie', named(['Director'])],
-      ['Drehbuch', named(['Screenplay', 'Writer'])],
-      ['Musik', named(['Original Music Composer'])],
+      [t('credDirector'), named(['Director'])],
+      [t('credWriter'), named(['Screenplay', 'Writer'])],
+      [t('credMusic'), named(['Original Music Composer'])],
     ].filter(([, n]) => n).map(([k, n]) => `${k} ${n}`).join(' · ');
     const second = [
-      d.runtime ? `${d.runtime} Min.` : '',
+      d.runtime ? t('runtime', { n: d.runtime }) : '',
       (d.genres || []).map((g) => g.name).join(', '),
     ].filter(Boolean).join(' · ');
 
@@ -125,7 +125,7 @@ async function tmdbLoadMovie(id) {
 
     const start = posters.find((p) => p.iso_639_1 === null) || posters[0] || backdrops[0];
     if (start) await tmdbPickImage(start);
-    else tmdbMsg('Film geladen, aber TMDB hat kein Bild. Eigenes Bild ins Feld oben ziehen.', true);
+    else tmdbMsg(t('msgNoImage'), true);
   } catch (e) {
     tmdbMsg(e.message, true);
   }
@@ -145,7 +145,7 @@ function showTmdbImages(list) {
     b.appendChild(im);
     const tag = document.createElement('span');
     tag.className = 'tag';
-    tag.textContent = (entry.kind === 'poster' ? 'Poster' : 'Szene') + (entry.iso_639_1 === null ? ' · ohne Text' : '');
+    tag.textContent = t(entry.kind === 'poster' ? 'tagPoster' : 'tagStill') + (entry.iso_639_1 === null ? ` · ${t('tagTextless')}` : '');
     b.appendChild(tag);
     b.addEventListener('click', () => tmdbPickImage(entry, b));
     b._entry = entry;
@@ -154,16 +154,16 @@ function showTmdbImages(list) {
 }
 
 async function tmdbPickImage(entry, button) {
-  tmdbMsg('Lade Bild …');
+  tmdbMsg(t('msgLoadingImage'));
   try {
     const img = await loadRemoteImage(`${TMDB.img}original${entry.file_path}`);
-    applyImage(img, 'TMDB-Bild geladen – anderes Bild ablegen zum Ersetzen');
+    applyImage(img, '@dropTmdb');
     document.querySelectorAll('#tmdbThumbs button').forEach((b) => {
       b.classList.toggle('is-active', b === button || (!button && b._entry === entry));
     });
     tmdbMsg('');
   } catch {
-    tmdbMsg('Das Bild ließ sich nicht laden. Lade es auf themoviedb.org herunter und ziehe es in das Feld oben.', true);
+    tmdbMsg(t('msgImageFail'), true);
   }
 }
 

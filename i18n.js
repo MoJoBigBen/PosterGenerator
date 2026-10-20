@@ -1,0 +1,208 @@
+// Texte der Oberfläche: Englisch (Standard) und Deutsch.
+// HTML-Elemente tragen data-i18n="schlüssel" (Text), data-i18n-placeholder="schlüssel".
+// Im Code: t('schlüssel', { name: wert }) – {name} im Text wird ersetzt.
+
+const LANG_STORE = 'posterGenerator.lang';
+
+const STRINGS = {
+  en: {
+    tabAlbum: 'Album',
+    tabFilm: 'Film',
+
+    dropAlbum: 'Drop, paste or click to add the cover',
+    dropFilm: 'Drop, paste or click to add an image (poster or still)',
+    dropLoaded: 'Image loaded – drop another one to replace it',
+    dropTmdb: 'TMDB image loaded – drop another one to replace it',
+
+    lblTitle: 'Title',
+    lblArtist: 'Artist',
+    lblYear: 'Year',
+    lblTracks: 'Tracks',
+    hintTracks: '(one per line)',
+    lblFooter: 'Footer',
+    hintFooter: '(label, tagline, …)',
+    lblTrackStyle: 'Tracklist',
+    optFlow: 'Running text',
+    optList: 'List',
+    lblBg: 'Background',
+    optCream: 'Cream',
+    optWhite: 'White',
+    optBlack: 'Black',
+    optCoverLight: 'Cover (light)',
+    optCover: 'Cover',
+    optCoverDark: 'Cover (dark)',
+    optCustom: 'Custom colour',
+    lblSwatches: 'Colours from the cover',
+    hintSwatches: '(click = use as background)',
+    chkPalette: 'Show colour palette on the poster',
+
+    tmdbSummary: 'Find a film (TMDB)',
+    lblTmdbKey: 'API key',
+    hintTmdbKey: '(once – stays in your browser only)',
+    phTmdbQuery: 'e.g. The Dark Knight',
+    btnSearch: 'Search',
+    lblPickImage: 'Choose an image',
+    hintPickImage: '(textless posters first)',
+    lblTagline: 'Tagline',
+    hintTagline: '(top)',
+    lblCast: 'Cast',
+    hintCast: '(one per line)',
+    lblCredits: 'Credits',
+    hintCredits: '(small block at the bottom)',
+    lblStyle: 'Style',
+    optTeaser: 'Teaser',
+    optClassic: 'Classic',
+    lblFont: 'Font',
+    optSans: 'Sans, wide',
+    optSerif: 'Serif',
+    optCompact: 'Compact',
+    lblShade: 'Darkening',
+    hintShade: '(gradient behind the text)',
+    lblZoom: 'Image crop',
+    hintZoom: '(zoom – drag the image with the mouse)',
+
+    lblFormat: 'Format',
+    lblQuality: 'Quality',
+    auto30: 'Match image · 30 cm',
+    autoA3: 'Match image · A3 (42 cm)',
+    autoA2: 'Match image · A2 (59.4 cm)',
+    auto70: 'Match image · 70 cm',
+
+    phCover: 'COVER',
+    phImage: 'IMAGE',
+
+    hintExport: 'Export: {w} × {h} px',
+    hintCapped: ' (capped at {dpi} dpi)',
+    hintImageDpi: ' · image ≈ {dpi} dpi',
+    hintBlurry: ' (will look blurry in print)',
+
+    errNoKey: 'Please enter your TMDB API key first (free at themoviedb.org → Settings → API).',
+    errUnreachable: 'Can\'t reach TMDB. Check your internet connection.',
+    errRejected: 'TMDB rejected the API key.',
+    errTmdb: 'TMDB error ({status}).',
+    msgSearching: 'Searching …',
+    msgNone: 'Nothing found.',
+    msgLoadingFilm: 'Loading film …',
+    msgLoadingImage: 'Loading image …',
+    msgNoImage: 'Film loaded, but TMDB has no image for it. Drop your own image into the field above.',
+    msgImageFail: 'Couldn\'t load the image. Download it from themoviedb.org and drop it into the field above.',
+    credDirector: 'Directed by',
+    credWriter: 'Written by',
+    credMusic: 'Music by',
+    runtime: '{n} min.',
+    tagPoster: 'Poster',
+    tagStill: 'Still',
+    tagTextless: 'textless',
+    tmdbLang: 'en-US',
+  },
+
+  de: {
+    tabAlbum: 'Album',
+    tabFilm: 'Film',
+
+    dropAlbum: 'Cover hier ablegen, einfügen oder klicken',
+    dropFilm: 'Bild (Poster oder Standbild) hier ablegen, einfügen oder klicken',
+    dropLoaded: 'Bild geladen – anderes Bild ablegen zum Ersetzen',
+    dropTmdb: 'TMDB-Bild geladen – anderes Bild ablegen zum Ersetzen',
+
+    lblTitle: 'Titel',
+    lblArtist: 'Künstler',
+    lblYear: 'Jahr',
+    lblTracks: 'Tracks',
+    hintTracks: '(einer pro Zeile)',
+    lblFooter: 'Fußzeile',
+    hintFooter: '(Label, Spruch, …)',
+    lblTrackStyle: 'Tracklist',
+    optFlow: 'Fließtext',
+    optList: 'Liste',
+    lblBg: 'Hintergrund',
+    optCream: 'Creme',
+    optWhite: 'Weiß',
+    optBlack: 'Schwarz',
+    optCoverLight: 'Cover (hell)',
+    optCover: 'Cover',
+    optCoverDark: 'Cover (dunkel)',
+    optCustom: 'Eigene Farbe',
+    lblSwatches: 'Farben aus dem Cover',
+    hintSwatches: '(klicken = Hintergrund)',
+    chkPalette: 'Farbpalette im Poster zeigen',
+
+    tmdbSummary: 'Film suchen (TMDB)',
+    lblTmdbKey: 'API-Key',
+    hintTmdbKey: '(einmalig, bleibt nur in deinem Browser)',
+    phTmdbQuery: 'z. B. The Dark Knight',
+    btnSearch: 'Suchen',
+    lblPickImage: 'Bild wählen',
+    hintPickImage: '(Poster ohne Text zuerst)',
+    lblTagline: 'Tagline',
+    hintTagline: '(oben)',
+    lblCast: 'Darsteller',
+    hintCast: '(einer pro Zeile)',
+    lblCredits: 'Credits',
+    hintCredits: '(kleiner Block unten)',
+    lblStyle: 'Stil',
+    optTeaser: 'Teaser',
+    optClassic: 'Klassisch',
+    lblFont: 'Schrift',
+    optSans: 'Sans, breit',
+    optSerif: 'Serif',
+    optCompact: 'Kompakt',
+    lblShade: 'Abdunkelung',
+    hintShade: '(Verlauf für die Schrift)',
+    lblZoom: 'Bildausschnitt',
+    hintZoom: '(Zoom, Bild mit der Maus verschieben)',
+
+    lblFormat: 'Format',
+    lblQuality: 'Qualität',
+    auto30: 'Bildformat · 30 cm',
+    autoA3: 'Bildformat · A3 (42 cm)',
+    autoA2: 'Bildformat · A2 (59,4 cm)',
+    auto70: 'Bildformat · 70 cm',
+
+    phCover: 'COVER',
+    phImage: 'BILD',
+
+    hintExport: 'Export: {w} × {h} px',
+    hintCapped: ' (auf {dpi} dpi begrenzt)',
+    hintImageDpi: ' · Bild ≈ {dpi} dpi',
+    hintBlurry: ' (wirkt im Druck unscharf)',
+
+    errNoKey: 'Bitte zuerst den TMDB-API-Key eintragen (kostenlos unter themoviedb.org → Einstellungen → API).',
+    errUnreachable: 'TMDB nicht erreichbar. Internetverbindung prüfen.',
+    errRejected: 'Der API-Key wurde von TMDB abgelehnt.',
+    errTmdb: 'TMDB-Fehler ({status}).',
+    msgSearching: 'Suche …',
+    msgNone: 'Nichts gefunden.',
+    msgLoadingFilm: 'Lade Film …',
+    msgLoadingImage: 'Lade Bild …',
+    msgNoImage: 'Film geladen, aber TMDB hat kein Bild dazu. Eigenes Bild ins Feld oben ziehen.',
+    msgImageFail: 'Das Bild ließ sich nicht laden. Lade es auf themoviedb.org herunter und ziehe es in das Feld oben.',
+    credDirector: 'Regie',
+    credWriter: 'Drehbuch',
+    credMusic: 'Musik',
+    runtime: '{n} Min.',
+    tagPoster: 'Poster',
+    tagStill: 'Szene',
+    tagTextless: 'ohne Text',
+    tmdbLang: 'de-DE',
+  },
+};
+
+let lang = 'en';
+try {
+  const saved = localStorage.getItem(LANG_STORE);
+  if (saved && STRINGS[saved]) lang = saved;
+} catch { /* privater Modus: Standard bleibt */ }
+
+function t(key, vars = {}) {
+  const text = STRINGS[lang][key] ?? STRINGS.en[key] ?? key;
+  return text.replace(/\{(\w+)\}/g, (_, name) => (name in vars ? vars[name] : `{${name}}`));
+}
+
+// Schreibt alle Texte im HTML neu (Beschriftungen, Menüeinträge, Platzhalter).
+function translateDom() {
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => { el.placeholder = t(el.dataset.i18nPlaceholder); });
+  document.querySelectorAll('.lang button').forEach((b) => b.classList.toggle('is-active', b.dataset.lang === lang));
+}

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,61 +9,67 @@
 <body>
 <div class="app" id="app" data-mode="album">
   <aside class="controls">
-    <h1>Poster Generator</h1>
+    <div class="head">
+      <h1>Poster Generator</h1>
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang="en" class="is-active">EN</button>
+        <button type="button" data-lang="de">DE</button>
+      </div>
+    </div>
 
     <div class="tabs" role="tablist">
-      <button type="button" class="tab is-active" data-mode="album">Album</button>
-      <button type="button" class="tab" data-mode="film">Film</button>
+      <button type="button" class="tab is-active" data-mode="album" data-i18n="tabAlbum">Album</button>
+      <button type="button" class="tab" data-mode="film" data-i18n="tabFilm">Film</button>
     </div>
 
     <label class="drop" id="drop">
       <input type="file" id="coverFile" accept="image/*" hidden>
-      <span id="dropText">Cover hier ablegen, einfügen oder klicken</span>
+      <span id="dropText" data-i18n="dropAlbum">Drop, paste or click to add the cover</span>
     </label>
 
     <!-- ===== Album ===== -->
     <div class="group only-album">
       <div class="field">
-        <label for="title">Titel</label>
+        <label for="title" data-i18n="lblTitle">Title</label>
         <input id="title" type="text">
       </div>
       <div class="row">
         <div class="field grow">
-          <label for="artist">Künstler</label>
+          <label for="artist" data-i18n="lblArtist">Artist</label>
           <input id="artist" type="text">
         </div>
         <div class="field year">
-          <label for="year">Jahr</label>
+          <label for="year" data-i18n="lblYear">Year</label>
           <input id="year" type="text" maxlength="4">
         </div>
       </div>
       <div class="field">
-        <label for="tracks">Tracks <small>(einer pro Zeile)</small></label>
+        <label for="tracks"><span data-i18n="lblTracks">Tracks</span> <small data-i18n="hintTracks">(one per line)</small></label>
         <textarea id="tracks" rows="9"></textarea>
       </div>
       <div class="field">
-        <label for="footer">Fußzeile <small>(Label, Spruch, …)</small></label>
+        <label for="footer"><span data-i18n="lblFooter">Footer</span> <small data-i18n="hintFooter">(label, tagline, …)</small></label>
         <input id="footer" type="text">
       </div>
 
       <div class="row">
         <div class="field grow">
-          <label for="trackStyle">Tracklist</label>
+          <label for="trackStyle" data-i18n="lblTrackStyle">Tracklist</label>
           <select id="trackStyle">
-            <option value="flow">Fließtext</option>
-            <option value="list">Liste</option>
+            <option value="flow" data-i18n="optFlow">Running text</option>
+            <option value="list" data-i18n="optList">List</option>
           </select>
         </div>
         <div class="field grow">
-          <label for="bgMode">Hintergrund</label>
+          <label for="bgMode" data-i18n="lblBg">Background</label>
           <select id="bgMode">
-            <option value="cream">Creme</option>
-            <option value="white">Weiß</option>
-            <option value="black">Schwarz</option>
-            <option value="coverLight">Cover (hell)</option>
-            <option value="cover">Cover</option>
-            <option value="coverDark">Cover (dunkel)</option>
-            <option value="custom">Eigene Farbe</option>
+            <option value="cream" data-i18n="optCream">Cream</option>
+            <option value="white" data-i18n="optWhite">White</option>
+            <option value="black" data-i18n="optBlack">Black</option>
+            <option value="coverLight" data-i18n="optCoverLight">Cover (light)</option>
+            <option value="cover" data-i18n="optCover">Cover</option>
+            <option value="coverDark" data-i18n="optCoverDark">Cover (dark)</option>
+            <option value="custom" data-i18n="optCustom">Custom colour</option>
           </select>
         </div>
         <div class="field color">
@@ -73,30 +79,30 @@
       </div>
 
       <div class="field" id="swatchField" hidden>
-        <label>Farben aus dem Cover <small>(klicken = Hintergrund)</small></label>
+        <label><span data-i18n="lblSwatches">Colours from the cover</span> <small data-i18n="hintSwatches">(click = use as background)</small></label>
         <div class="swatches" id="swatches"></div>
       </div>
 
-      <label class="check"><input type="checkbox" id="showPalette"> Farbpalette im Poster zeigen</label>
+      <label class="check"><input type="checkbox" id="showPalette"> <span data-i18n="chkPalette">Show colour palette on the poster</span></label>
     </div>
 
     <!-- ===== Film ===== -->
     <div class="group only-film">
       <details class="tmdb" id="tmdbBox" open>
-        <summary>Film suchen (TMDB)</summary>
+        <summary data-i18n="tmdbSummary">Find a film (TMDB)</summary>
         <div class="field">
-          <label for="tmdbKey">API-Key <small>(einmalig, bleibt nur in deinem Browser)</small></label>
+          <label for="tmdbKey"><span data-i18n="lblTmdbKey">API key</span> <small data-i18n="hintTmdbKey">(once – stays in your browser only)</small></label>
           <input id="tmdbKey" type="password" autocomplete="off" spellcheck="false">
         </div>
         <div class="row">
           <div class="field grow">
-            <input id="tmdbQuery" type="text" placeholder="z. B. The Dark Knight">
+            <input id="tmdbQuery" type="text" placeholder="e.g. The Dark Knight" data-i18n-placeholder="phTmdbQuery">
           </div>
-          <button type="button" id="tmdbSearch" class="secondary">Suchen</button>
+          <button type="button" id="tmdbSearch" class="secondary" data-i18n="btnSearch">Search</button>
         </div>
         <div class="results" id="tmdbResults"></div>
         <div class="field" id="tmdbImagesField" hidden>
-          <label>Bild wählen <small>(Poster ohne Text zuerst)</small></label>
+          <label><span data-i18n="lblPickImage">Choose an image</span> <small data-i18n="hintPickImage">(textless posters first)</small></label>
           <div class="thumbs" id="tmdbThumbs"></div>
         </div>
         <p class="hint" id="tmdbMsg"></p>
@@ -104,42 +110,42 @@
       </details>
 
       <div class="field">
-        <label for="fTitle">Titel</label>
+        <label for="fTitle" data-i18n="lblTitle">Title</label>
         <input id="fTitle" type="text">
       </div>
       <div class="field">
-        <label for="fTagline">Tagline <small>(oben)</small></label>
+        <label for="fTagline"><span data-i18n="lblTagline">Tagline</span> <small data-i18n="hintTagline">(top)</small></label>
         <input id="fTagline" type="text">
       </div>
       <div class="row top">
         <div class="field year">
-          <label for="fYear">Jahr</label>
+          <label for="fYear" data-i18n="lblYear">Year</label>
           <input id="fYear" type="text" maxlength="4">
         </div>
         <div class="field grow">
-          <label for="fCast">Darsteller <small>(einer pro Zeile)</small></label>
+          <label for="fCast"><span data-i18n="lblCast">Cast</span> <small data-i18n="hintCast">(one per line)</small></label>
           <textarea id="fCast" rows="4"></textarea>
         </div>
       </div>
       <div class="field">
-        <label for="fCredits">Credits <small>(kleiner Block unten)</small></label>
+        <label for="fCredits"><span data-i18n="lblCredits">Credits</span> <small data-i18n="hintCredits">(small block at the bottom)</small></label>
         <textarea id="fCredits" rows="3"></textarea>
       </div>
 
       <div class="row">
         <div class="field grow">
-          <label for="fLayout">Stil</label>
+          <label for="fLayout" data-i18n="lblStyle">Style</label>
           <select id="fLayout">
-            <option value="teaser">Teaser</option>
-            <option value="classic">Klassisch</option>
+            <option value="teaser" data-i18n="optTeaser">Teaser</option>
+            <option value="classic" data-i18n="optClassic">Classic</option>
           </select>
         </div>
         <div class="field grow">
-          <label for="fFont">Schrift</label>
+          <label for="fFont" data-i18n="lblFont">Font</label>
           <select id="fFont">
-            <option value="sans">Sans, breit</option>
-            <option value="serif">Serif</option>
-            <option value="compact">Kompakt</option>
+            <option value="sans" data-i18n="optSans">Sans, wide</option>
+            <option value="serif" data-i18n="optSerif">Serif</option>
+            <option value="compact" data-i18n="optCompact">Compact</option>
           </select>
         </div>
         <div class="field color">
@@ -148,23 +154,23 @@
         </div>
       </div>
       <div class="field">
-        <label for="fShade">Abdunkelung <small>(Verlauf für die Schrift)</small></label>
+        <label for="fShade"><span data-i18n="lblShade">Darkening</span> <small data-i18n="hintShade">(gradient behind the text)</small></label>
         <input id="fShade" type="range" min="0" max="100" value="70">
       </div>
       <div class="field">
-        <label for="fZoom">Bildausschnitt <small>(Zoom, Bild mit der Maus verschieben)</small></label>
+        <label for="fZoom"><span data-i18n="lblZoom">Image crop</span> <small data-i18n="hintZoom">(zoom – drag the image with the mouse)</small></label>
         <input id="fZoom" type="range" min="1" max="3" step="0.01" value="1">
       </div>
     </div>
 
-    <!-- ===== gemeinsam ===== -->
+    <!-- ===== shared ===== -->
     <div class="row">
       <div class="field grow">
-        <label for="size">Format</label>
+        <label for="size" data-i18n="lblFormat">Format</label>
         <select id="size"></select>
       </div>
       <div class="field grow">
-        <label for="dpi">Qualität</label>
+        <label for="dpi" data-i18n="lblQuality">Quality</label>
         <select id="dpi">
           <option value="300">300 dpi</option>
           <option value="200">200 dpi</option>
@@ -184,6 +190,7 @@
     <canvas id="preview" width="1000" height="1414"></canvas>
   </main>
 </div>
+<script src="i18n.js"></script>
 <script src="film.js"></script>
 <script src="tmdb.js"></script>
 <script src="app.js"></script>

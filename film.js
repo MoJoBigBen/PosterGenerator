@@ -12,7 +12,8 @@ const FILM_SAMPLE = {
   tagline: 'Why so serious?',
   year: '2008',
   cast: ['Christian Bale', 'Heath Ledger', 'Aaron Eckhart', 'Michael Caine'].join('\n'),
-  credits: 'Regie Christopher Nolan · Drehbuch Jonathan Nolan · Musik Hans Zimmer\n152 Min. · Action, Krimi, Drama',
+  en: { credits: 'Directed by Christopher Nolan · Written by Jonathan Nolan · Music by Hans Zimmer\n152 min. · Action, Crime, Drama' },
+  de: { credits: 'Regie Christopher Nolan · Drehbuch Jonathan Nolan · Musik Hans Zimmer\n152 Min. · Action, Krimi, Drama' },
 };
 
 const FILM_FONTS = {
@@ -84,7 +85,7 @@ function renderFilm(ctx, L, H, scale) {
     ctx.globalAlpha = 0.35;
     ctx.font = `400 28px ${FONT}`;
     ctx.textAlign = 'center';
-    ctx.fillText('BILD', L / 2, H / 2);
+    ctx.fillText(t('phImage'), L / 2, H / 2);
     ctx.globalAlpha = 1;
   }
 

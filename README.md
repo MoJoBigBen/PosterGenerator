@@ -1,151 +1,154 @@
 # Poster Generator
 
-Eigene Poster selber machen, statt sie online für viel Geld zu kaufen:
+🇩🇪 [Deutsche Version](README.de.md)
 
-- **Album-Poster** im Polaroid-Stil: Cover, Titel, Künstler und Tracklist.
-- **Film-Poster** wie Kinoplakate: Das Bild füllt das ganze Poster, Titel,
-  Tagline, Darsteller und Credits liegen darüber. Filmdaten und Bilder holt
-  das Tool auf Wunsch direkt von TMDB.
+Make your own posters instead of paying a lot for them online:
 
-Fertig exportierst du das Poster als PNG oder PDF in Druckqualität und lässt
-es im Copyshop oder bei einer Online-Druckerei ausdrucken.
+- **Album posters** in a polaroid style: cover, title, artist and tracklist.
+- **Film posters** that look like cinema posters: the image fills the whole
+  poster, with title, tagline, cast and credits on top. The tool can fetch
+  film data and images straight from TMDB.
 
-Alles läuft **im Browser auf deinem Rechner**. Es gibt keinen eigenen Server
-und kein Konto. Deine Bilder werden nirgends hochgeladen. Nur die
-TMDB-Suche (siehe unten) fragt bei TMDB an.
+Export the finished poster as a PNG or PDF in print quality and have it
+printed at a copy shop or an online print service.
+
+Everything runs **in your browser, on your computer**. There is no server of
+its own and no account. Your images are never uploaded anywhere. Only the
+TMDB search (see below) talks to TMDB.
 
 ## Download
 
-Das Repo ist privat, du musst bei GitHub eingeloggt sein.
+The repo is private, so you need to be logged in to GitHub.
 
-**Als ZIP:** auf GitHub oben rechts **Code → Download ZIP**, entpacken.
+**As a ZIP:** on GitHub click **Code → Download ZIP** (top right), then unzip.
 
-**Oder mit Git:**
+**Or with Git:**
 
 ```bash
 git clone https://github.com/MoJoBigBen/PosterGenerator.git
 ```
 
-Oder mit der GitHub-CLI:
+Or with the GitHub CLI:
 
 ```bash
 gh repo clone MoJoBigBen/PosterGenerator
 ```
 
-## Benutzen
+## Usage
 
-Es ist nichts zu installieren. **`index.html` per Doppelklick im Browser
-öffnen**, fertig. Oben links wechselst du zwischen **Album** und **Film**.
+There is nothing to install. **Open `index.html` in your browser** by
+double-clicking it. Top left, switch between **Album** and **Film**.
 
-Das Bild kommt immer über das gestrichelte Feld: ziehen, hineinklicken oder
-aus der Zwischenablage einfügen (`Cmd+V`).
+The interface is in **English** by default. Click **EN | DE** at the top right
+to switch to German. Your browser remembers the choice. For film posters, the
+texts that come from TMDB (title, genres, credits line) follow the language too.
+
+The image always goes into the dashed box: drag it in, click the box, or paste
+from the clipboard (`Cmd+V`).
 
 ### Album
 
-1. **Cover** laden.
-2. **Titel, Künstler, Jahr, Tracks** eintippen. Die Tracks stehen einer pro
-   Zeile im Textfeld. Die Vorschau aktualisiert sich sofort.
-3. **Fußzeile** für Label oder einen Spruch, falls du eine willst.
-4. **Tracklist** als Fließtext oder als Liste. Bei vielen Tracks teilt die
-   Liste sich in Spalten auf und die Schrift wird kleiner.
-5. **Hintergrund**: Creme, Weiß, Schwarz, drei Varianten aus der Coverfarbe
-   (hell, normal, dunkel) oder eine eigene Farbe. Unter dem Hintergrund
-   erscheinen die Farben aus dem Cover. Ein Klick darauf setzt sie als
-   Hintergrund. Die Schriftfarbe passt sich automatisch an.
-6. **Farbpalette im Poster zeigen** setzt unten rechts kleine Farbquadrate aus
-   dem Cover. Die Farbe, die gerade der Hintergrund ist, fehlt dabei, damit
-   keine Lücke entsteht.
+1. Load the **cover**.
+2. Type **title, artist, year and tracks**. Tracks go one per line in the text
+   box. The preview updates immediately.
+3. Add a **footer** for the label or a tagline if you like.
+4. **Tracklist** as running text or as a list. With many tracks the list
+   splits into columns and the text gets smaller.
+5. **Background**: cream, white, black, three variants of the cover colour
+   (light, normal, dark) or a custom colour. Below the background, the colours
+   from the cover appear. Click one to use it as the background. The text colour
+   adapts automatically.
+6. **Show colour palette on the poster** puts small colour squares from the
+   cover in the bottom right. The colour that is currently the background is
+   left out so there is no gap.
 
 ### Film
 
-Das Bild füllt das ganze Poster. Das **Format passt sich dem Bild an**: Ein
-Hochformat-Poster bleibt hochkant, ein Standbild im Querformat gibt ein
-Querformat-Poster. Im Format-Menü wählst du dazu die lange Seite
-(30 cm, A3, A2, 70 cm). Du kannst auch ein festes Format wie A3 oder 50 × 70
-wählen, dann wird das Bild zugeschnitten.
+The image fills the whole poster, and the **format adapts to the image**: a
+portrait poster stays portrait, a landscape still gives a landscape poster. In
+the format menu you choose the long side (30 cm, A3, A2, 70 cm). You can also
+pick a fixed format like A3 or 50 × 70, in which case the image is cropped.
 
-1. **Bild** laden, entweder selbst oder über die TMDB-Suche (siehe unten).
-2. **Titel, Tagline, Jahr, Darsteller, Credits** eintippen oder von TMDB
-   füllen lassen.
-3. **Stil**:
-   - **Teaser**: Tagline klein oben, der Titel breit gesetzt unten, darunter
-     Jahr und Credits. Wie das Dark-Knight-Teaserplakat.
-   - **Klassisch**: Tagline als Kursivzeile oben, unten der große Titel und die
-     Darsteller als Namensblock. Wie Pulp Fiction oder Vom Winde verweht.
-4. **Schrift**: Sans (breit gesetzt), Serif oder Kompakt (Plakatschrift).
-   Die Schriftfarbe wählst du daneben.
-5. **Abdunkelung** regelt den dunklen Verlauf oben und unten, damit die Schrift
-   auf hellen Bildern lesbar bleibt.
-6. **Bildausschnitt**: Mit dem Zoom-Regler vergrößerst du das Bild, mit der
-   Maus verschiebst du es direkt in der Vorschau.
+1. Load an **image**, either your own or through the TMDB search (see below).
+2. Type **title, tagline, year, cast and credits**, or let TMDB fill them in.
+3. **Style**:
+   - **Teaser**: small tagline at the top, the title set wide at the bottom,
+     with year and credits below. Like the Dark Knight teaser poster.
+   - **Classic**: tagline as an italic line at the top, big title at the bottom
+     and the cast as a name block. Like Pulp Fiction or Gone with the Wind.
+4. **Font**: sans (wide), serif or compact (poster type). Pick the text colour
+   next to it.
+5. **Darkening** controls the dark gradient at the top and bottom that keeps
+   the text readable on bright images.
+6. **Image crop**: zoom with the slider and drag the image with the mouse
+   right in the preview.
 
-Unter den Knöpfen steht, wie viele **dpi** dein Bild im Druck hat. Unter etwa
-150 dpi wirkt es unscharf. Bei TMDB nimmst du am besten ein Poster oder eine
-Szene in Originalgröße und druckst nicht größer als A3.
+Below the buttons the tool shows how many **dpi** your image has in print.
+Below about 150 dpi it looks blurry. From TMDB, take a poster or a still at
+original size and don't print larger than A3.
 
-### Filme von TMDB laden
+### Loading films from TMDB
 
-[TMDB](https://www.themoviedb.org) ist eine freie Filmdatenbank. Das Tool holt
-daraus Titel, Tagline, Jahr, Darsteller, Regie, Laufzeit und Genre und zeigt
-die Poster und Szenenbilder zur Auswahl. Poster **ohne Text** stehen zuerst,
-die eignen sich am besten für ein eigenes Design.
+[TMDB](https://www.themoviedb.org) is a free film database. The tool pulls
+title, tagline, year, cast, director, runtime and genre from it and shows the
+posters and stills to choose from. Posters **without text** come first, and they
+work best for your own design.
 
-**Einmalig einen API-Key holen** (kostenlos, für private Nutzung):
+**Get an API key once** (free, for personal use):
 
-1. Bei [themoviedb.org](https://www.themoviedb.org) ein Konto anlegen.
-2. Unter **Einstellungen → API** einen Key beantragen. Als Verwendung gibst du
-   an, dass es ein privates Projekt ist.
-3. Den **API-Schlüssel (v3)** oder das **API Read Access Token** in das Feld
-   "API-Key" einfügen. Beides funktioniert.
+1. Create an account at [themoviedb.org](https://www.themoviedb.org).
+2. Under **Settings → API** request a key. Say it is a personal project.
+3. Paste the **API key (v3)** or the **API Read Access Token** into the
+   "API key" field. Both work.
 
-Der Key wird nur im `localStorage` deines Browsers gespeichert und steht
-nicht im Code und nicht im Repo.
+The key is only stored in your browser's `localStorage`. It is not in the code
+and not in the repo.
 
-Dann einen Filmtitel eingeben, auf **Suchen** klicken und den Film anklicken.
-Alle Felder füllen sich, und das erste Poster ohne Text wird geladen. Unter
-"Bild wählen" kannst du ein anderes Bild nehmen.
+Then enter a film title, click **Search** and click the film. All fields fill
+in and the first textless poster is loaded. Under "Choose an image" you can pick
+a different one.
 
 *This product uses the TMDB API but is not endorsed or certified by TMDB.*
 
-## Formate
+## Formats
 
-- A4 (21 × 29,7 cm), A3 (29,7 × 42 cm), A2 (42 × 59,4 cm)
+- A4 (21 × 29.7 cm), A3 (29.7 × 42 cm), A2 (42 × 59.4 cm)
 - 30 × 40 cm, 40 × 50 cm, 50 × 70 cm
-- Nur im Film-Modus: **Bildformat**, das sich dem Bild anpasst (lange Seite
-  30 cm, A3, A2 oder 70 cm)
+- Film mode only: **Match image**, which adapts to the image (long side
+  30 cm, A3, A2 or 70 cm)
 
-300 dpi ist die richtige Wahl für den Druck. Bei großen Formaten darfst du auf
-200 oder 150 dpi gehen, wenn der Export zu lange dauert oder die Datei zu groß
-wird. Auf Armlänge sieht man den Unterschied kaum. Sehr große Exporte kürzt das
-Tool von selbst auf eine Auflösung, die der Browser schafft, und sagt es dir.
+300 dpi is the right choice for printing. For large formats you can go down to
+200 or 150 dpi if the export takes too long or the file gets too big. At arm's
+length you hardly see the difference. If an export would be too big for the
+browser, the tool lowers the resolution by itself and tells you.
 
-Das **PDF** ist eine Seite in exakt der gewählten Größe, die Druckereien
-direkt annehmen. Beim Album-Poster wird das Cover bei **30 × 40 cm** und
-**40 × 50 cm** etwas kleiner, damit genug Platz für die Texte bleibt.
+The **PDF** is a single page in exactly the chosen size, which print shops
+accept directly. For album posters at **30 × 40 cm** and **40 × 50 cm** the
+cover gets a little smaller so there is enough room for the text.
 
-## Tipps
+## Tips
 
-- Beim Album nimm ein **Cover mit mindestens 1000 × 1000 Pixeln**. Ein kleines
-  Bild wird auf dem Poster sichtbar unscharf.
-- Das Album-Cover wird mittig quadratisch zugeschnitten, falls es das nicht
-  schon ist.
-- Titel und Tracklist werden automatisch kleiner, wenn sie nicht passen.
+- For albums use a **cover of at least 1000 × 1000 pixels**. A smaller image
+  will look visibly blurry on the poster.
+- The album cover is cropped to a square from the centre if it isn't one.
+- Title and tracklist shrink automatically when they don't fit.
 
-## Dateien
+## Files
 
 ```
-index.html   Oberfläche
-style.css    Aussehen der Oberfläche
-app.js       Album-Poster, Farbpalette, Formate, PNG- und PDF-Export
-film.js      Film-Poster (Vollbild, Stile, Bildausschnitt)
-tmdb.js      Suche und Bilder von TMDB
+index.html   Interface
+style.css    Look of the interface
+i18n.js      Texts in English and German
+app.js       Album poster, colour palette, formats, PNG and PDF export
+film.js      Film poster (full bleed, styles, image crop)
+tmdb.js      Search and images from TMDB
 ```
 
-Das Poster wird auf ein Canvas gezeichnet. Das PDF baut `app.js` selbst
-zusammen, es sind keine Bibliotheken eingebunden.
+The poster is drawn on a canvas. `app.js` builds the PDF itself, so there are
+no libraries.
 
-## Geplant
+## Planned
 
-- Weitere Album-Stile und Film-Stile
-- Cover und Tracklist beim Album per Suche automatisch laden
-- Bei vielen Tracks das Cover automatisch verkleinern
+- More album and film styles
+- Load cover and tracklist automatically for albums
+- Shrink the cover automatically when there are many tracks
