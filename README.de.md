@@ -17,7 +17,17 @@ Alles läuft **im Browser auf deinem Rechner**. Es gibt keinen eigenen Server
 und kein Konto. Deine Bilder werden nirgends hochgeladen. Nur die Suchen
 (iTunes für Alben, TMDB für Filme, siehe unten) fragen bei diesen Diensten an.
 
+## Online benutzen
+
+**<https://mojobigben.github.io/PosterGenerator/>**
+
+Link öffnen und loslegen. Es ist nichts zu installieren, und es läuft im Browser
+am Computer oder am Handy. Deine Bilder bleiben in deinem Browser.
+
 ## Download
+
+Wenn du es lieber auf deinem eigenen Rechner laufen lässt:
+
 
 Das Repo ist öffentlich, du brauchst für den Download kein GitHub-Konto.
 

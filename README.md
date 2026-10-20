@@ -17,7 +17,17 @@ Everything runs **in your browser, on your computer**. There is no server of
 its own and no account. Your images are never uploaded anywhere. Only the
 searches (iTunes for albums, TMDB for films, see below) contact those services.
 
+## Use it online
+
+**<https://mojobigben.github.io/PosterGenerator/>**
+
+Open the link and start. Nothing to install, and it works on a computer or a
+phone browser. Your images stay in your browser.
+
 ## Download
+
+If you'd rather run it from your own computer:
+
 
 The repo is public, so you don't need a GitHub account to download it.
 
