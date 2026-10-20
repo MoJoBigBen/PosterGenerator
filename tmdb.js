@@ -99,21 +99,22 @@ async function tmdbLoadMovie(id) {
       const hit = crew.find((c) => jobs.includes(c.job));
       return hit ? hit.name : '';
     };
-    const first = [
-      [t('credDirector'), named(['Director'])],
-      [t('credWriter'), named(['Screenplay', 'Writer'])],
-      [t('credMusic'), named(['Original Music Composer'])],
-    ].filter(([, n]) => n).map(([k, n]) => `${k} ${n}`).join(' · ');
-    const second = [
-      d.runtime ? t('runtime', { n: d.runtime }) : '',
-      (d.genres || []).map((g) => g.name).join(', '),
-    ].filter(Boolean).join(' · ');
+    const credit = (key, jobs) => {
+      const name = named(jobs);
+      return name ? `${t(key)} ${name}` : '';
+    };
+    // Drei Zeilen: Regie + Drehbuch, Musik, Laufzeit + Genre
+    const creditLines = [
+      [credit('credDirector', ['Director']), credit('credWriter', ['Screenplay', 'Writer'])],
+      [credit('credMusic', ['Original Music Composer'])],
+      [d.runtime ? t('runtime', { n: d.runtime }) : '', (d.genres || []).map((g) => g.name).join(', ')],
+    ].map((parts) => parts.filter(Boolean).join(' · ')).filter(Boolean);
 
     $('fTitle').value = d.title || d.original_title || '';
     $('fTagline').value = tagline;
     $('fYear').value = (d.release_date || '').slice(0, 4);
     $('fCast').value = (d.credits?.cast || []).slice(0, 4).map((c) => c.name).join('\n');
-    $('fCredits').value = [first, second].filter(Boolean).join('\n');
+    $('fCredits').value = creditLines.join('\n');
     $('tmdbResults').innerHTML = '';
     redraw();
 
