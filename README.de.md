@@ -163,6 +163,17 @@ Das **PDF** ist eine Seite in exakt der gewählten Größe, die Druckereien
 direkt annehmen. Beim Album-Poster wird das Cover bei **30 × 40 cm** und
 **40 × 50 cm** etwas kleiner, damit genug Platz für die Texte bleibt.
 
+## Speicherort wählen
+
+Standardmäßig landen PNG und PDF im Download-Ordner deines Browsers. Setzt du
+unter den Export-Knöpfen den Haken bei **Speicherort selbst wählen**, öffnet das
+Tool jedes Mal ein "Speichern unter"-Fenster, in dem du Ordner und Dateinamen
+selbst bestimmst. Die Einstellung wird gemerkt.
+
+Das geht in Chrome, Edge und Opera. Firefox und Safari erlauben es Webseiten
+nicht. Dort schaltest du stattdessen in den Download-Einstellungen des Browsers
+"Vor dem Download nach dem Speicherort fragen" ein, das macht dasselbe.
+
 ## Tipps
 
 - Beim Album nimm ein **Cover mit mindestens 1000 × 1000 Pixeln**. Ein kleines

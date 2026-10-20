@@ -160,6 +160,17 @@ The **PDF** is a single page in exactly the chosen size, which print shops
 accept directly. For album posters at **30 × 40 cm** and **40 × 50 cm** the
 cover gets a little smaller so there is enough room for the text.
 
+## Choosing where to save
+
+By default PNG and PDF files go to your browser's download folder. Tick
+**Choose where to save** below the export buttons and the tool opens a "Save
+as" window each time, so you can pick the folder and file name yourself. The
+choice is remembered.
+
+This works in Chrome, Edge and Opera. Firefox and Safari don't allow it for web
+pages. There, turn on "Ask where to save each file" in the browser's download
+settings instead, which does the same thing.
+
 ## Tips
 
 - For albums use a **cover of at least 1000 × 1000 pixels**. A smaller image

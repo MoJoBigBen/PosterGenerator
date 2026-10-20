@@ -494,18 +494,64 @@ async function withBusy(btn, fn) {
   try { await fn(); } finally { btn.disabled = false; }
 }
 
-$('exportPng').addEventListener('click', (e) => withBusy(e.target, async () => {
-  const blob = await toBlob(exportCanvas(), 'image/png');
-  download(blob, filename('png'));
-}));
+// "Speichern unter": Das Dialogfenster muss direkt nach dem Klick aufgehen (der Browser
+// verlangt eine frische Benutzeraktion), also VOR dem langen Rendern öffnen.
+const CAN_PICK_FILE = typeof window.showSaveFilePicker === 'function';
+const SAVE_TYPES = {
+  png: { description: 'PNG', accept: { 'image/png': ['.png'] } },
+  pdf: { description: 'PDF', accept: { 'application/pdf': ['.pdf'] } },
+};
 
-$('exportPdf').addEventListener('click', (e) => withBusy(e.target, async () => {
+// Gibt ein Datei-Handle zurück, oder null für den normalen Download.
+// Bricht der Benutzer den Dialog ab, wird der Export ganz abgebrochen (wirft AbortError).
+async function pickSaveTarget(ext) {
+  if (!$('askSave').checked || !CAN_PICK_FILE) return null;
+  try {
+    return await window.showSaveFilePicker({ suggestedName: filename(ext), types: [SAVE_TYPES[ext]] });
+  } catch (e) {
+    if (e.name === 'AbortError') throw e;
+    return null; // Dialog nicht möglich (z. B. eingebettetes Fenster): normal herunterladen
+  }
+}
+
+async function saveBlob(blob, ext, handle) {
+  if (!handle) return download(blob, filename(ext));
+  const out = await handle.createWritable();
+  await out.write(blob);
+  await out.close();
+}
+
+// Läuft der Export-Knopf-Handler, ohne dass ein Abbruch als Fehler erscheint.
+const runExport = (btn, ext, build) => withBusy(btn, async () => {
+  let handle;
+  try { handle = await pickSaveTarget(ext); } catch { return; }
+  await saveBlob(await build(), ext, handle);
+});
+
+$('exportPng').addEventListener('click', (e) => runExport(e.currentTarget, 'png', () =>
+  toBlob(exportCanvas(), 'image/png')));
+
+$('exportPdf').addEventListener('click', (e) => runExport(e.currentTarget, 'pdf', async () => {
   const [, w, h] = currentSize();
   const c = exportCanvas();
   const jpeg = new Uint8Array(await (await toBlob(c, 'image/jpeg', 0.95)).arrayBuffer());
-  const pdf = buildPdf(jpeg, c.width, c.height, w / 25.4 * 72, h / 25.4 * 72);
-  download(new Blob([pdf], { type: 'application/pdf' }), filename('pdf'));
+  return new Blob([buildPdf(jpeg, c.width, c.height, w / 25.4 * 72, h / 25.4 * 72)], { type: 'application/pdf' });
 }));
+
+// Auswahl merken; wo der Browser es nicht kann, ausgrauen und erklären
+const ASK_SAVE_STORE = 'posterGenerator.askSave';
+function initAskSave() {
+  const box = $('askSave');
+  if (!CAN_PICK_FILE) {
+    box.disabled = true;
+    $('askSaveHint').hidden = false;
+    return;
+  }
+  try { box.checked = localStorage.getItem(ASK_SAVE_STORE) === '1'; } catch { /* egal */ }
+  box.addEventListener('change', () => {
+    try { localStorage.setItem(ASK_SAVE_STORE, box.checked ? '1' : '0'); } catch { /* egal */ }
+  });
+}
 
 // Minimal single-page PDF that embeds one JPEG, so no library is needed.
 function buildPdf(jpeg, pxW, pxH, wPt, hPt) {
@@ -573,6 +619,7 @@ document.querySelectorAll('.lang button').forEach((b) => b.addEventListener('cli
 initFilmDrag(preview, redraw);
 initTmdb();
 initItunes();
+initAskSave();
 
 // cover input: click, drag & drop, paste
 $('coverFile').addEventListener('change', (e) => setCover(e.target.files[0]));

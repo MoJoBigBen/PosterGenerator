@@ -70,6 +70,8 @@ const STRINGS = {
 
     lblFormat: 'Format',
     lblQuality: 'Quality',
+    chkAskSave: 'Choose where to save',
+    hintAskSave: 'Not available in this browser (Chrome, Edge and Opera can do it). Alternatively, turn on “Ask where to save each file” in your browser\'s download settings.',
     auto30: 'Match image · 30 cm',
     autoA3: 'Match image · A3 (42 cm)',
     autoA2: 'Match image · A2 (59.4 cm)',
@@ -168,6 +170,8 @@ const STRINGS = {
 
     lblFormat: 'Format',
     lblQuality: 'Qualität',
+    chkAskSave: 'Speicherort selbst wählen',
+    hintAskSave: 'In diesem Browser nicht möglich (Chrome, Edge und Opera können es). Alternativ in den Download-Einstellungen deines Browsers „Vor dem Download nach dem Speicherort fragen“ einschalten.',
     auto30: 'Bildformat · 30 cm',
     autoA3: 'Bildformat · A3 (42 cm)',
     autoA2: 'Bildformat · A2 (59,4 cm)',
