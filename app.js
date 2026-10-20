@@ -610,7 +610,7 @@ $('fCredits').value = FILM_SAMPLE[lang].credits;
 
 [
   'title', 'artist', 'year', 'tracks', 'footer', 'trackStyle', 'bgMode', 'customBg', 'showPalette',
-  'fTitle', 'fTagline', 'fYear', 'fCast', 'fCredits', 'fLayout', 'fFont', 'fColor', 'fShade', 'fZoom',
+  'fTitle', 'fTagline', 'fYear', 'fSeason', 'fCast', 'fCredits', 'fLayout', 'fFont', 'fColor', 'fShade', 'fZoom',
   'size', 'dpi',
 ].forEach((id) => $(id).addEventListener('input', () => {
   if (id === 'customBg') $('bgMode').value = 'custom';

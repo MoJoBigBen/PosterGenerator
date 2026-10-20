@@ -102,7 +102,11 @@
     <!-- ===== Film ===== -->
     <div class="group only-film">
       <details class="tmdb" id="tmdbBox" open>
-        <summary data-i18n="tmdbSummary">Find a film (TMDB)</summary>
+        <summary data-i18n="tmdbSummary">Find a film or series (TMDB)</summary>
+        <div class="seg" id="tmdbKind">
+          <button type="button" data-kind="movie" class="is-active" data-i18n="kindMovie">Film</button>
+          <button type="button" data-kind="tv" data-i18n="kindTv">Series</button>
+        </div>
         <div class="field">
           <label for="tmdbKey"><span data-i18n="lblTmdbKey">API key</span> <small data-i18n="hintTmdbKey">(once – stays in your browser only)</small></label>
           <input id="tmdbKey" type="password" autocomplete="off" spellcheck="false">
@@ -116,6 +120,7 @@
         <div class="results" id="tmdbResults"></div>
         <div class="field" id="tmdbImagesField" hidden>
           <label><span data-i18n="lblPickImage">Choose an image</span> <small data-i18n="hintPickImage">(textless posters first)</small></label>
+          <div class="chips" id="tmdbScopes" hidden></div>
           <div class="thumbs" id="tmdbThumbs"></div>
         </div>
         <p class="hint" id="tmdbMsg"></p>
@@ -128,6 +133,10 @@
       <div class="field">
         <label for="fTagline"><span data-i18n="lblTagline">Tagline</span> <small data-i18n="hintTagline">(top)</small></label>
         <input id="fTagline" type="text">
+      </div>
+      <div class="field">
+        <label for="fSeason"><span data-i18n="lblSeason">Season</span> <small data-i18n="hintSeason">(optional, for series posters)</small></label>
+        <input id="fSeason" type="text">
       </div>
       <div class="row top">
         <div class="field year">

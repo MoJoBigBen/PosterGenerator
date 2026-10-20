@@ -12,8 +12,8 @@ const film = {
   guides: null,  // Einrast-Linien während des Ziehens: { x: [..], y: [..] }
 };
 
-const TEXT_KEYS = ['tagline', 'cast', 'title', 'year', 'credits'];
-const BOTTOM_KEYS = ['cast', 'title', 'year', 'credits'];
+const TEXT_KEYS = ['tagline', 'cast', 'title', 'season', 'year', 'credits'];
+const BOTTOM_KEYS = ['cast', 'title', 'season', 'year', 'credits'];
 
 const FILM_SAMPLE = {
   title: 'The Dark Knight',
@@ -118,6 +118,7 @@ function renderFilm(ctx, L, H, scale, isPreview) {
   const title = $('fTitle').value.trim().toUpperCase();
   const tagline = $('fTagline').value.trim();
   const year = $('fYear').value.trim();
+  const season = $('fSeason').value.trim();
   const cast = splitLines($('fCast').value);
   const credits = splitLines($('fCredits').value);
 
@@ -193,6 +194,15 @@ function renderFilm(ctx, L, H, scale, isPreview) {
       line('year', year, cx, y, ys, tr);
       ctx.globalAlpha = 1;
       y -= ys * 1.2 + 12;
+    });
+  }
+
+  if (season) {
+    at('season', () => {
+      const ss = 30, tr = ss * 0.3;
+      ctx.font = `700 ${ss}px ${FONT}`;
+      line('season', season.toUpperCase(), cx, y, ss, tr);
+      y -= ss * 1.2 + 12;
     });
   }
 

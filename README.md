@@ -133,7 +133,7 @@ Below the buttons the tool shows how many **dpi** your image has in print.
 Below about 150 dpi it looks blurry. This works for album covers too. From TMDB, take a poster or a still at
 original size and don't print larger than A3.
 
-### Loading films from TMDB
+### Loading films and series from TMDB
 
 [TMDB](https://www.themoviedb.org) is a free film database. The tool pulls
 title, tagline, year, cast, director, runtime and genre from it and shows the
@@ -150,11 +150,19 @@ work best for your own design.
 The key is only stored in your browser's `localStorage`. It is not in the code
 and not in the repo.
 
-Then enter a film title, click **Search** and click the film. All fields fill
+Then pick **Film** or **Series** above the search field, enter a title, click **Search** and click the result. All fields fill
 in and the first textless poster is loaded. Under "Choose an image" you can pick
 a different one.
 
 <a href="https://www.themoviedb.org"><img src="assets/tmdb-logo.svg" alt="TMDB" height="16"></a>
+
+**Series:** with **Series** selected the tool fills in the name, the start year,
+the main cast, the creators, the number of seasons, the network and the genres.
+Below the image choices there is a row **Series | S1 | S2 | …**. Click a season
+to see its own posters. When you pick a season poster, the **Season** field
+fills in (for example "Season 2") and appears on the poster above the year. You
+can move it like any other text, or clear the field to hide it. Picking a
+series image removes the season again.
 
 *This product uses the TMDB API but is not endorsed or certified by TMDB.*
 
@@ -210,5 +218,5 @@ no libraries.
 
 ## Planned
 
-- More album and film styles
+- More album, film and series styles
 - Shrink the cover automatically when there are many tracks

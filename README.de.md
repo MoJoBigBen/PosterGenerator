@@ -136,7 +136,7 @@ Unter den Knöpfen steht, wie viele **dpi** dein Bild im Druck hat. Unter etwa
 150 dpi wirkt es unscharf. Das gilt auch für Album-Cover. Bei TMDB nimmst du am besten ein Poster oder eine
 Szene in Originalgröße und druckst nicht größer als A3.
 
-### Filme von TMDB laden
+### Filme und Serien von TMDB laden
 
 [TMDB](https://www.themoviedb.org) ist eine freie Filmdatenbank. Das Tool holt
 daraus Titel, Tagline, Jahr, Darsteller, Regie, Laufzeit und Genre und zeigt
@@ -154,11 +154,19 @@ die eignen sich am besten für ein eigenes Design.
 Der Key wird nur im `localStorage` deines Browsers gespeichert und steht
 nicht im Code und nicht im Repo.
 
-Dann einen Filmtitel eingeben, auf **Suchen** klicken und den Film anklicken.
+Dann über dem Suchfeld **Film** oder **Serie** wählen, einen Titel eingeben, auf **Suchen** klicken und das Ergebnis anklicken.
 Alle Felder füllen sich, und das erste Poster ohne Text wird geladen. Unter
 "Bild wählen" kannst du ein anderes Bild nehmen.
 
 <a href="https://www.themoviedb.org"><img src="assets/tmdb-logo.svg" alt="TMDB" height="16"></a>
+
+**Serien:** Bei **Serie** füllt das Tool Namen, Startjahr, Hauptdarsteller,
+Schöpfer, Anzahl der Staffeln, Sender und Genre aus. Unter der Bildauswahl
+steht eine Reihe **Serie | S1 | S2 | …**. Klick auf eine Staffel zeigt deren
+eigene Poster. Wählst du ein Staffelposter, füllt sich das Feld **Staffel**
+(zum Beispiel "Staffel 2") und erscheint im Poster über dem Jahr. Du kannst es
+wie jeden anderen Text verschieben oder das Feld leeren, um es auszublenden. Ein
+Serienbild nimmt die Staffel wieder weg.
 
 *This product uses the TMDB API but is not endorsed or certified by TMDB.*
 
@@ -215,5 +223,5 @@ zusammen, es sind keine Bibliotheken eingebunden.
 
 ## Geplant
 
-- Weitere Album-Stile und Film-Stile
+- Weitere Album-, Film- und Serien-Stile
 - Bei vielen Tracks das Cover automatisch verkleinern

@@ -194,3 +194,21 @@ button.secondary:hover { border-color: var(--muted); }
 .credits .tiny { font-size: 11px; line-height: 1.35; }
 .credits a { display: inline-block; line-height: 0; }
 .credits img { display: block; height: 14px; width: auto; }
+
+/* ---------- Film | Serie und Staffel-Auswahl ---------- */
+
+.seg { display: flex; gap: 2px; background: var(--bg); padding: 2px; border-radius: 6px; align-self: flex-start; }
+.seg button {
+  border: 0; background: transparent; color: var(--muted); cursor: pointer;
+  font: inherit; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 4px;
+}
+.seg button:hover { color: var(--text); }
+.seg button.is-active { background: var(--panel); color: var(--text); }
+
+.chips { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 6px; }
+.chips button {
+  border: 1px solid var(--line); background: var(--bg); color: var(--muted); cursor: pointer;
+  font: inherit; font-size: 12px; padding: 2px 9px; border-radius: 999px;
+}
+.chips button:hover { color: var(--text); border-color: var(--muted); }
+.chips button.is-active { color: #111; background: var(--accent); border-color: var(--accent); }
