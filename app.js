@@ -145,6 +145,13 @@ function layoutTracks(ctx, tracks, style, cols, size, width) {
 
 // ---------- drawing ----------
 
+const ALBUM_MARGIN = 75;
+
+// Kantenlänge des Covers in Poster-Einheiten (Breite = 1000)
+function albumCoverSize(L, H) {
+  return Math.min(L - 2 * ALBUM_MARGIN, H - 2 * ALBUM_MARGIN - 55 - H * 0.25);
+}
+
 function render(canvas) {
   const ctx = canvas.getContext('2d');
   const scale = canvas.width / 1000;
@@ -176,9 +183,9 @@ function render(canvas) {
     : [];
   const showPalette = swatches.length > 0;
 
-  const m = 75;
+  const m = ALBUM_MARGIN;
   const gap = 55;
-  const cover = Math.min(L - 2 * m, H - 2 * m - gap - H * 0.25);
+  const cover = albumCoverSize(L, H);
   const cw = cover;
   const x0 = (L - cw) / 2;
 
@@ -348,6 +355,12 @@ function redraw() {
   let text = t('hintExport', { w: px(w), h: px(h) });
   if (dpi !== +$('dpi').value) text += t('hintCapped', { dpi });
   let warn = false;
+  if (state.mode === 'album' && state.cover) {
+    const coverMm = albumCoverSize(1000, 1000 * h / w) / 1000 * w;
+    const eff = Math.round(25.4 / (coverMm / Math.min(state.cover.naturalWidth, state.cover.naturalHeight)));
+    text += t('hintImageDpi', { dpi: eff });
+    if (eff < 150) { text += t('hintBlurry'); warn = true; }
+  }
   if (state.mode === 'film' && film.img) {
     // Wie viele Bildpunkte des Originals landen pro Zoll im Druck?
     const mmPerPx = Math.max(w / film.img.naturalWidth, h / film.img.naturalHeight) / +$('fZoom').value;
@@ -559,6 +572,7 @@ document.querySelectorAll('.tab').forEach((tab) => tab.addEventListener('click',
 document.querySelectorAll('.lang button').forEach((b) => b.addEventListener('click', () => setLanguage(b.dataset.lang)));
 initFilmDrag(preview, redraw);
 initTmdb();
+initItunes();
 
 // cover input: click, drag & drop, paste
 $('coverFile').addEventListener('change', (e) => setCover(e.target.files[0]));

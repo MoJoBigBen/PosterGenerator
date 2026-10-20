@@ -29,6 +29,19 @@
 
     <!-- ===== Album ===== -->
     <div class="group only-album">
+      <details class="tmdb" id="albumBox" open>
+        <summary data-i18n="albumSummary">Find an album (iTunes)</summary>
+        <div class="row">
+          <div class="field grow">
+            <input id="albumQuery" type="text" placeholder="e.g. Coldplay Parachutes" data-i18n-placeholder="phAlbumQuery">
+          </div>
+          <button type="button" id="albumSearch" class="secondary" data-i18n="btnSearch">Search</button>
+        </div>
+        <div class="results" id="albumResults"></div>
+        <p class="hint" id="albumMsg"></p>
+        <p class="hint tiny" data-i18n="albumCredit">Album data and cover art from the iTunes Search API.</p>
+      </details>
+
       <div class="field">
         <label for="title" data-i18n="lblTitle">Title</label>
         <input id="title" type="text">
@@ -193,6 +206,7 @@
 <script src="i18n.js"></script>
 <script src="film.js"></script>
 <script src="tmdb.js"></script>
+<script src="itunes.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

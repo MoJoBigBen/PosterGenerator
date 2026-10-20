@@ -5,6 +5,7 @@
 Eigene Poster selber machen, statt sie online für viel Geld zu kaufen:
 
 - **Album-Poster** im Polaroid-Stil: Cover, Titel, Künstler und Tracklist.
+  Das Tool kann Alben suchen und alles automatisch ausfüllen.
 - **Film-Poster** wie Kinoplakate: Das Bild füllt das ganze Poster, Titel,
   Tagline, Darsteller und Credits liegen darüber. Filmdaten und Bilder holt
   das Tool auf Wunsch direkt von TMDB.
@@ -13,8 +14,8 @@ Fertig exportierst du das Poster als PNG oder PDF in Druckqualität und lässt
 es im Copyshop oder bei einer Online-Druckerei ausdrucken.
 
 Alles läuft **im Browser auf deinem Rechner**. Es gibt keinen eigenen Server
-und kein Konto. Deine Bilder werden nirgends hochgeladen. Nur die
-TMDB-Suche (siehe unten) fragt bei TMDB an.
+und kein Konto. Deine Bilder werden nirgends hochgeladen. Nur die Suchen
+(iTunes für Alben, TMDB für Filme, siehe unten) fragen bei diesen Diensten an.
 
 ## Download
 
@@ -48,7 +49,7 @@ aus der Zwischenablage einfügen (`Cmd+V`).
 
 ### Album
 
-1. **Cover** laden.
+1. **Cover** laden oder von der Albumsuche laden lassen (siehe unten).
 2. **Titel, Künstler, Jahr, Tracks** eintippen. Die Tracks stehen einer pro
    Zeile im Textfeld. Die Vorschau aktualisiert sich sofort.
 3. **Fußzeile** für Label oder einen Spruch, falls du eine willst.
@@ -61,6 +62,27 @@ aus der Zwischenablage einfügen (`Cmd+V`).
 6. **Farbpalette im Poster zeigen** setzt unten rechts kleine Farbquadrate aus
    dem Cover. Die Farbe, die gerade der Hintergrund ist, fehlt dabei, damit
    keine Lücke entsteht.
+
+### Alben automatisch suchen
+
+Oben im Album-Formular Künstler und Album eintippen (zum Beispiel
+`Coldplay Parachutes`), auf **Suchen** klicken und das Album anklicken. Titel,
+Künstler, Jahr, die komplette Tracklist, das Label (aus der Copyright-Zeile) und
+das Cover füllen sich. Danach ist alles weiter bearbeitbar, und du kannst auch
+ein eigenes Cover hineinziehen.
+
+Genutzt wird die kostenlose **iTunes Search API** von Apple. Du brauchst keinen
+Key und kein Konto. Gut zu wissen:
+
+- Das Cover kommt in der größten Größe, die Apple hat. Das sind oft
+  3000 × 3000 px, bei älteren Alben aber manchmal nur etwa 1400 px. Die
+  dpi-Anzeige unter den Knöpfen sagt dir, ob das Cover im Druck weich wirkt.
+- Deluxe-Versionen und Remasters erscheinen als eigene Ergebnisse. Nimm die
+  passende.
+- Alben, die nicht bei Apple Music sind, findet die Suche nicht. Dann nimmst du
+  ein eigenes Cover und tippst die Tracks ein.
+- Das Label ist eine Schätzung aus der Copyright-Zeile. Korrigiere es bei Bedarf
+  im Feld Fußzeile.
 
 ### Film
 
@@ -86,7 +108,7 @@ wählen, dann wird das Bild zugeschnitten.
    Maus verschiebst du es direkt in der Vorschau.
 
 Unter den Knöpfen steht, wie viele **dpi** dein Bild im Druck hat. Unter etwa
-150 dpi wirkt es unscharf. Bei TMDB nimmst du am besten ein Poster oder eine
+150 dpi wirkt es unscharf. Das gilt auch für Album-Cover. Bei TMDB nimmst du am besten ein Poster oder eine
 Szene in Originalgröße und druckst nicht größer als A3.
 
 ### Filme von TMDB laden
@@ -145,7 +167,8 @@ style.css    Aussehen der Oberfläche
 i18n.js      Texte auf Englisch und Deutsch
 app.js       Album-Poster, Farbpalette, Formate, PNG- und PDF-Export
 film.js      Film-Poster (Vollbild, Stile, Bildausschnitt)
-tmdb.js      Suche und Bilder von TMDB
+tmdb.js      Filmsuche und Bilder von TMDB
+itunes.js    Albumsuche von iTunes
 ```
 
 Das Poster wird auf ein Canvas gezeichnet. Das PDF baut `app.js` selbst
@@ -154,5 +177,4 @@ zusammen, es sind keine Bibliotheken eingebunden.
 ## Geplant
 
 - Weitere Album-Stile und Film-Stile
-- Cover und Tracklist beim Album per Suche automatisch laden
 - Bei vielen Tracks das Cover automatisch verkleinern

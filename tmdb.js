@@ -30,10 +30,10 @@ async function tmdbFetch(path, params = {}) {
   try {
     res = await fetch(url, opts);
   } catch {
-    throw new Error(t('errUnreachable'));
+    throw new Error(t('errUnreachable', { service: 'TMDB' }));
   }
   if (res.status === 401) throw new Error(t('errRejected'));
-  if (!res.ok) throw new Error(t('errTmdb', { status: res.status }));
+  if (!res.ok) throw new Error(t('errService', { service: 'TMDB', status: res.status }));
   return res.json();
 }
 

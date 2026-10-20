@@ -5,6 +5,7 @@
 Make your own posters instead of paying a lot for them online:
 
 - **Album posters** in a polaroid style: cover, title, artist and tracklist.
+  The tool can look albums up for you and fill everything in.
 - **Film posters** that look like cinema posters: the image fills the whole
   poster, with title, tagline, cast and credits on top. The tool can fetch
   film data and images straight from TMDB.
@@ -14,7 +15,7 @@ printed at a copy shop or an online print service.
 
 Everything runs **in your browser, on your computer**. There is no server of
 its own and no account. Your images are never uploaded anywhere. Only the
-TMDB search (see below) talks to TMDB.
+searches (iTunes for albums, TMDB for films, see below) contact those services.
 
 ## Download
 
@@ -48,7 +49,7 @@ from the clipboard (`Cmd+V`).
 
 ### Album
 
-1. Load the **cover**.
+1. Load the **cover**, or let the album search do it (see below).
 2. Type **title, artist, year and tracks**. Tracks go one per line in the text
    box. The preview updates immediately.
 3. Add a **footer** for the label or a tagline if you like.
@@ -61,6 +62,27 @@ from the clipboard (`Cmd+V`).
 6. **Show colour palette on the poster** puts small colour squares from the
    cover in the bottom right. The colour that is currently the background is
    left out so there is no gap.
+
+### Finding albums automatically
+
+At the top of the album form, type an artist and album (for example
+`Coldplay Parachutes`), click **Search** and click the album. Title, artist,
+year, the complete tracklist, the label (from the copyright line) and the cover
+are filled in. Afterwards everything is still editable, and you can still drop
+in your own cover.
+
+It uses the free **iTunes Search API** from Apple. You don't need a key or an
+account. Things to know:
+
+- The cover comes in the largest size Apple has, which is often 3000 × 3000 px
+  but for older albums can be around 1400 px. The dpi display below the buttons
+  tells you if the cover will look soft in print.
+- Deluxe editions and remasters show up as separate results, pick the one you
+  want.
+- Albums that aren't on Apple Music can't be found. Use your own cover and type
+  the tracks in.
+- The label is a best guess from the copyright line. Correct it in the footer
+  field if needed.
 
 ### Film
 
@@ -84,7 +106,7 @@ pick a fixed format like A3 or 50 × 70, in which case the image is cropped.
    right in the preview.
 
 Below the buttons the tool shows how many **dpi** your image has in print.
-Below about 150 dpi it looks blurry. From TMDB, take a poster or a still at
+Below about 150 dpi it looks blurry. This works for album covers too. From TMDB, take a poster or a still at
 original size and don't print larger than A3.
 
 ### Loading films from TMDB
@@ -141,7 +163,8 @@ style.css    Look of the interface
 i18n.js      Texts in English and German
 app.js       Album poster, colour palette, formats, PNG and PDF export
 film.js      Film poster (full bleed, styles, image crop)
-tmdb.js      Search and images from TMDB
+tmdb.js      Film search and images from TMDB
+itunes.js    Album search from iTunes
 ```
 
 The poster is drawn on a canvas. `app.js` builds the PDF itself, so there are
@@ -150,5 +173,4 @@ no libraries.
 ## Planned
 
 - More album and film styles
-- Load cover and tracklist automatically for albums
 - Shrink the cover automatically when there are many tracks
