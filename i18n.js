@@ -44,6 +44,22 @@ const STRINGS = {
     chkPalette: 'Show colour palette on the poster',
 
     tmdbSummary: 'Find a film or series (TMDB)',
+    guideTitle: 'How do I get a TMDB API key?',
+    guide1a: 'Create a free account at',
+    guide1b: 'and confirm your email address.',
+    guide2a: 'Open',
+    guide2link: 'Settings → API',
+    guide2b: ' and request an API key. Choose the personal / non-commercial option and describe it as a private poster maker. For the website address you can enter the address of this page.',
+    guide3: 'Copy the <b>API Read Access Token</b> (a very long text) or the <b>API Key</b> (short). Either one works.',
+    guide4: 'Paste it into the “API key” field above. The tool remembers it in your browser, so you only do this once.',
+    guideNote: 'Keep the key to yourself. Everyone should get their own, it\'s free.',
+    helpTitle: 'Help',
+    helpAlbum: '<b>Album:</b> search for an album or drop in your own cover, check the texts, pick a background, export.',
+    helpFilm: '<b>Film / series:</b> search TMDB (needs a free API key, see the guide in the film tab) or drop in your own image. Pick a style, and set the format to match the image.',
+    helpText: '<b>Moving text:</b> drag any text on the film poster. “Dragging moves” sets what moves along. It snaps to the centre, the margins and other texts; hold Alt to move freely, double-click to reset.',
+    helpImage: '<b>Image:</b> drag the image to move it, and use the slider to zoom. The dpi note below the buttons tells you how sharp it will print.',
+    helpExport: '<b>Export:</b> PNG or PDF, 300 dpi is right for printing. In Chrome and Edge you can tick “Choose where to save”.',
+    helpMore: 'Full guide on GitHub',
     kindMovie: 'Film',
     kindTv: 'Series',
     scopeSeries: 'Series',
@@ -161,6 +177,22 @@ const STRINGS = {
     chkPalette: 'Farbpalette im Poster zeigen',
 
     tmdbSummary: 'Film oder Serie suchen (TMDB)',
+    guideTitle: 'Wie komme ich an einen TMDB-API-Key?',
+    guide1a: 'Lege ein kostenloses Konto bei',
+    guide1b: 'an und bestätige deine E-Mail-Adresse.',
+    guide2a: 'Öffne',
+    guide2link: 'Einstellungen → API',
+    guide2b: ' und beantrage einen API-Key. Wähle die private / nicht-kommerzielle Option und beschreibe es als privaten Poster-Generator. Als Webseite kannst du die Adresse dieser Seite angeben.',
+    guide3: 'Kopiere das <b>API Read Access Token</b> (ein sehr langer Text) oder den <b>API-Schlüssel</b> (kurz). Beides funktioniert.',
+    guide4: 'Füge ihn oben ins Feld „API-Key“ ein. Das Tool merkt ihn sich in deinem Browser, du machst das nur einmal.',
+    guideNote: 'Behalte den Key für dich. Jeder sollte seinen eigenen holen, das ist kostenlos.',
+    helpTitle: 'Hilfe',
+    helpAlbum: '<b>Album:</b> ein Album suchen oder ein eigenes Cover hineinziehen, Texte prüfen, Hintergrund wählen, exportieren.',
+    helpFilm: '<b>Film / Serie:</b> TMDB durchsuchen (braucht einen kostenlosen API-Key, siehe Anleitung im Film-Tab) oder ein eigenes Bild hineinziehen. Stil wählen und das Format ans Bild anpassen.',
+    helpText: '<b>Text verschieben:</b> beliebigen Text im Film-Poster ziehen. „Ziehen bewegt“ legt fest, was mitwandert. Er rastet an der Mitte, den Rändern und anderen Texten ein; mit Alt frei verschieben, Doppelklick setzt zurück.',
+    helpImage: '<b>Bild:</b> mit der Maus verschieben und mit dem Regler zoomen. Die dpi-Angabe unter den Knöpfen zeigt, wie scharf es gedruckt wird.',
+    helpExport: '<b>Export:</b> PNG oder PDF, 300 dpi passt zum Drucken. In Chrome und Edge kannst du „Speicherort selbst wählen“ ankreuzen.',
+    helpMore: 'Ausführliche Anleitung auf GitHub',
     kindMovie: 'Film',
     kindTv: 'Serie',
     scopeSeries: 'Serie',
@@ -254,7 +286,11 @@ function t(key, vars = {}) {
 // Schreibt alle Texte im HTML neu (Beschriftungen, Menüeinträge, Platzhalter).
 function translateDom() {
   document.documentElement.lang = lang;
-  document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n]').forEach((el) => {
+    const text = t(el.dataset.i18n);
+    if (text.includes('<b>')) el.innerHTML = text; // nur eigene Texte aus STRINGS, nie Benutzereingaben
+    else el.textContent = text;
+  });
   document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => { el.placeholder = t(el.dataset.i18nPlaceholder); });
   document.querySelectorAll('.lang button').forEach((b) => b.classList.toggle('is-active', b.dataset.lang === lang));
 }

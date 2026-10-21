@@ -54,6 +54,10 @@ The interface is in **English** by default. Click **EN | DE** at the top right
 to switch to German. Your browser remembers the choice. For film posters, the
 texts that come from TMDB (title, genres, credits line) follow the language too.
 
+The same instructions, including a step-by-step guide to getting a TMDB API key,
+are built into the page itself: open **How do I get a TMDB API key?** in the
+film tab, or the **Help** tile at the bottom of the sidebar.
+
 The image always goes into the dashed box: drag it in, click the box, or paste
 from the clipboard (`Cmd+V`).
 

@@ -54,6 +54,10 @@ Die Oberfläche ist standardmäßig auf **Englisch**. Mit **EN | DE** oben recht
 schaltest du auf Deutsch um, das merkt sich der Browser. Beim Film-Poster
 folgen auch die Texte von TMDB (Titel, Genres, Credits-Zeile) der Sprache.
 
+Diese Anleitung steht auch in der Seite selbst, mit einer Schritt-für-Schritt-Hilfe
+für den TMDB-API-Key: Öffne im Film-Tab **Wie komme ich an einen TMDB-API-Key?**
+oder die Kachel **Hilfe** unten in der Seitenleiste.
+
 Das Bild kommt immer über das gestrichelte Feld: ziehen, hineinklicken oder
 aus der Zwischenablage einfügen (`Cmd+V`).
 

@@ -212,3 +212,13 @@ button.secondary:hover { border-color: var(--muted); }
 }
 .chips button:hover { color: var(--text); border-color: var(--muted); }
 .chips button.is-active { color: #111; background: var(--accent); border-color: var(--accent); }
+
+/* ---------- Anleitung und Hilfe ---------- */
+
+.guide, .help { border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; background: var(--bg); }
+.guide summary, .help summary { cursor: pointer; font-weight: 600; font-size: 13px; }
+.guide ol, .help ul { margin: 8px 0 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; font-size: 12px; line-height: 1.45; color: var(--text); }
+.guide li::marker { color: var(--muted); }
+.guide a, .help a { color: var(--text); text-decoration: underline; text-underline-offset: 2px; }
+.guide .tiny, .help .tiny { margin: 8px 0 0; color: var(--muted); font-size: 11px; line-height: 1.4; }
+.help { background: transparent; }

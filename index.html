@@ -111,6 +111,16 @@
           <label for="tmdbKey"><span data-i18n="lblTmdbKey">API key</span> <small data-i18n="hintTmdbKey">(once – stays in your browser only)</small></label>
           <input id="tmdbKey" type="password" autocomplete="off" spellcheck="false">
         </div>
+        <details class="guide" id="keyGuide">
+          <summary data-i18n="guideTitle">How do I get a TMDB API key?</summary>
+          <ol>
+            <li><span data-i18n="guide1a">Create a free account at</span> <a href="https://www.themoviedb.org/signup" target="_blank" rel="noopener">themoviedb.org</a> <span data-i18n="guide1b">and confirm your email address.</span></li>
+            <li><span data-i18n="guide2a">Open</span> <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener" data-i18n="guide2link">Settings → API</a><span data-i18n="guide2b"> and request an API key. Choose the personal / non-commercial option and describe it as a private poster maker. For the website address you can enter the address of this page.</span></li>
+            <li data-i18n="guide3">Copy the <b>API Read Access Token</b> (a very long text) or the <b>API Key</b> (short). Either one works.</li>
+            <li data-i18n="guide4">Paste it into the “API key” field above. The tool remembers it in your browser, so you only do this once.</li>
+          </ol>
+          <p class="tiny" data-i18n="guideNote">Keep the key to yourself. Everyone should get their own, it's free.</p>
+        </details>
         <div class="row">
           <div class="field grow">
             <input id="tmdbQuery" type="text" placeholder="e.g. The Dark Knight" data-i18n-placeholder="phTmdbQuery">
@@ -218,6 +228,18 @@
     <label class="check"><input type="checkbox" id="askSave"> <span data-i18n="chkAskSave">Choose where to save</span></label>
     <p class="hint tiny" id="askSaveHint" data-i18n="hintAskSave" hidden></p>
     <p class="hint" id="hint"></p>
+
+    <details class="help" id="help">
+      <summary data-i18n="helpTitle">Help</summary>
+      <ul>
+        <li data-i18n="helpAlbum"><b>Album:</b> search for an album or drop in your own cover, check the texts, pick a background, export.</li>
+        <li data-i18n="helpFilm"><b>Film / series:</b> search TMDB (needs a free API key, see the guide in the film tab) or drop in your own image. Pick a style, and set the format to match the image.</li>
+        <li data-i18n="helpText"><b>Moving text:</b> drag any text on the film poster. “Dragging moves” sets what moves along. It snaps to the centre, the margins and other texts; hold Alt to move freely, double-click to reset.</li>
+        <li data-i18n="helpImage"><b>Image:</b> drag the image to move it, and use the slider to zoom. The dpi note below the buttons tells you how sharp it will print.</li>
+        <li data-i18n="helpExport"><b>Export:</b> PNG or PDF, 300 dpi is right for printing. In Chrome and Edge you can tick “Choose where to save”.</li>
+      </ul>
+      <p class="tiny"><a href="https://github.com/MoJoBigBen/PosterGenerator#readme" target="_blank" rel="noopener" data-i18n="helpMore">Full guide on GitHub</a></p>
+    </details>
 
     <footer class="credits">
       <p class="tiny" data-i18n="creditFilm">Film data and images from</p>
